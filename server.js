@@ -2,16 +2,25 @@ const http = require('http'); // Necessário para integrar com socket.io
 const express = require('express'); // Framework para criar o servidor web
 const app = express(); // Cria uma instância da aplicação Express
 const server = http.createServer(app); // Usa http.createServer
-const PORT = 80; // Define a porta que o site opera
+const PORT = 3000; // Define a porta que o site opera
 
 const path = require('path'); // Fornece utilitários para trabalhar com caminhos de arquivos e diretórios de forma 
 
-// Servir arquivos estáticos da pasta 'home'
-app.use(express.static(path.join(__dirname, 'home')));
+// Servir arquivos estáticos da pasta 'pages'
+app.use(express.static(path.join(__dirname, 'pages')));
 
 // Rota principal que serve o arquivo 'index.html' dentro da pasta 'home'
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'home', 'index.html'));
+    res.sendFile(path.join(__dirname,'pages','home', 'index.html'));
+});
+
+// Rota para login
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages','login', 'login.html'));
+});
+
+app.get('/cadastro', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages','cadastro', 'cadastro.html'));
 });
 
 server.listen(PORT, () => {
