@@ -83,7 +83,6 @@ O sistema **deve** possuir:
 - Capacidade de operação apenas em dispositivos desktop, sem suporte para gerenciamento remoto ou versão móvel.
 
 ## Instrutor
-[Djalma Batista Junior]  
-[https://www.linkedin.com/in/djalmabjunior/]
+[Djalma Batista Junior] - [https://www.linkedin.com/in/djalmabjunior/]
 
 ___
