@@ -3,8 +3,7 @@ const express = require('express'); // Framework para criar o servidor web
 const app = express(); // Cria uma instância da aplicação Express
 const server = http.createServer(app); // Usa http.createServer
 const PORT = 3000; // Define a porta que o site opera
-
-const path = require('path'); // Fornece utilitários para trabalhar com caminhos de arquivos e diretórios de forma 
+const path = require('path'); // Fornece utilitários para trabalhar com caminhos de arquivos e diretórios de forma
 
 // Servir arquivos estáticos da pasta 'public'
 app.use(express.static(path.join(__dirname, 'public')));
@@ -19,7 +18,12 @@ server.listen(PORT, () => {
     console.log(`Servidor acessível na rede: http://<seu-ip-local>:${PORT}`);
 });
 
+// No console dentro da página do projeto
 //npm init -y
-//npm install socket.io
 //npm install express
+//npm install sequelize
+//npm install mysql2
+
+// Vai usar
+//npm install socket.io
 //npm install moment
