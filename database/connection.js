@@ -20,5 +20,4 @@ dataBase.authenticate()
 // Exportar a instância de conexão com o banco de dados
 module.exports = dataBase;
 
-//Intalar MySQL Server e WorkBench
-//https://dev.mysql.com/downloads/installer/
+//Intalar MySQL Server e WorkBench (https://dev.mysql.com/downloads/installer/)

@@ -11,8 +11,8 @@ async function criarUsuario() {
       data_cadastro: new Date().toISOString().slice(0,10), // yyyy-mm-dd
       nome: 'Irineu da Silva',
       cpf: '123.456.789-00',
-      e_mail: 'joao@email.com',
-      senha_hash: 'hash_da_senha_aqui',
+      e_mail: 'irineu@email.com',
+      senha_hash: 'hash_da_senha',
       telefone: '99999-9999',
       ativo: 1,
       ultimo_login: null,
