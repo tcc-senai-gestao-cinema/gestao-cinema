@@ -264,5 +264,18 @@
       </div> 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      socket.on('mensagem', (dados) => {
+        console.log('Mensagem recebida do servidor:', dados);
+      });
+
+      // Para enviar:
+      socket.emit('mensagem', { nome: "Fulano", texto: "Oi!" });
+    </script>
+
   </body>
 </html>
