@@ -9,6 +9,9 @@ const io = new Server(server); // conecta o socket.io ao servidor http
 
 const PORT = 3000; // Define a porta que o site opera
 
+// Habilitar o parser de JSON
+app.use(express.json());
+
 // Servir arquivos estáticos da pasta 'public' (exemplo: http://localhost:port/img/logo.png)
 app.use(express.static(path.join(__dirname, 'public')));
 

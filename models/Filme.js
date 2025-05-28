@@ -28,14 +28,9 @@ const Filme = dataBase.define('Filme', {
     type: DataTypes.TEXT,
     allowNull: true
   },
-  nome_imagem: {
+  imagem_url: {
     type: DataTypes.STRING(255),
     allowNull: true
-  },
-  slug: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-    unique: true
   }
 }, {
   tableName: 'filmes',

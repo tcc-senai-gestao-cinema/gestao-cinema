@@ -31,8 +31,7 @@ CREATE TABLE IF NOT EXISTS filmes (
     duracao INT,
     classificacao_indicativa VARCHAR(50),
     sinopse TEXT,
-    nome_imagem VARCHAR(255), -- Nome da imagem
-    slug VARCHAR(255) -- URL amigável ou rota da imagem
+    imagem_url VARCHAR(255)
 );
 
 -- Tabela das salas de exibição do cinema
