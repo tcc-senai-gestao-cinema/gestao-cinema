@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS filmes (
     genero VARCHAR(100),
     duracao INT,
     classificacao_indicativa VARCHAR(50),
-    sinopse TEXT
+    sinopse TEXT,
     nome_imagem VARCHAR(255), -- Nome da imagem
     slug VARCHAR(255) -- URL amigável ou rota da imagem
 );
