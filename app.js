@@ -9,10 +9,7 @@ const io = new Server(server); // conecta o socket.io ao servidor http
 
 const PORT = 3000; // Define a porta que o site opera
 
-// Servir arquivos estáticos da pasta public (exemplo: http://localhost:port/img/logo.png)
-app.use(express.static('public'));
-
-// Servir arquivos estáticos da pasta 'public'
+// Servir arquivos estáticos da pasta 'public' (exemplo: http://localhost:port/img/logo.png)
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Rota principal que serve o arquivo 'home.html'
@@ -23,7 +20,7 @@ app.get('/', (req, res) => {
 const mainSocket = require('./sockets/mainSocket');
 mainSocket(io);
 
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
     console.log(`Servidor acessível na rede: http://<seu-ip-local>:${PORT}`);
 });
