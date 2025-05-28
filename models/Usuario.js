@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');  // Corrigir a importação
+const { DataTypes } = require('sequelize');  // Corrigir a importação
 const dataBase = require('../database/connection');  // Importa a conexão com o banco de dados
 
 // Definindo o modelo Usuario
