@@ -135,15 +135,22 @@
 
 }
 
+.cartão img {
+  height: 250px; /* Altura fixa para a imagem */
+  object-fit: cover; /* Mantém o aspecto da imagem e preenche o espaço */
+ 
+}
+
 /* Media query para telas com largura máxima de 768 pixels (tablets e alguns dispositivos móveis maiores) */
 @media (max-width: 768px) {
     .cards-container {
         margin-left: 0 !important; /* Remove a margem esquerda que era para a barra lateral vertical e força essa propriedade. */
-        padding-bottom: 50px; /* Adiciona um preenchimento inferior para dar espaço à barra lateral inferior (quando em modo mobile). */
+        padding-bottom: 500px !important; /* Adiciona um preenchimento inferior para dar espaço à barra lateral inferior (quando em modo mobile). */
         width: 100% !important; /* Define a largura para 100% em telas menores e força essa propriedade. */
-        padding-left: 3px; /* Adiciona um pequeno preenchimento à esquerda. */
-        padding-right: 3px; /* Adiciona um pequeno preenchimento à direita. */
+        padding-left: 3px !important; /* Adiciona um pequeno preenchimento à esquerda. */
+        padding-right: 3px !important; /* Adiciona um pequeno preenchimento à direita. */
     }
+
 
     footer {
         display: none; /* Oculta o rodapé em telas menores ou iguais a 768 pixels. */

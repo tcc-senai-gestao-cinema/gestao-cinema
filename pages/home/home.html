@@ -135,9 +135,10 @@
         const container = document.getElementById('container-display-filmes');
         container.innerHTML = ''; // limpa os antigos
         filmes.forEach(filme => {
+          console.log(filme);
           const card = `
             <div class="col-md-2 col-sm-4 col-6">
-              <a href="pagina-do-filme.html?id=${filme.id}" class="card-link">
+              <a href="escolhaFilme/escolhaFilme.html?id_filme=${filme.id_filme}" class="card-link">
                 <div class="card cartão">
                   <img src="${filme.imagem_url}" class="card-img-top" alt="${filme.titulo}">
                   <div class="card-body text-center">
