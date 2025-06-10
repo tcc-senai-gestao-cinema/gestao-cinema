@@ -1,4 +1,4 @@
-const http = require('http'); // Necessário para integrar com socket.io
+const http = require('http'); 
 const express = require('express'); // Framework para criar o servidor web
 const { Server } = require('socket.io');
 const path = require('path'); // Fornece utilitários para trabalhar com caminhos de arquivos e diretórios de forma
@@ -14,11 +14,22 @@ app.use(express.json());
 
 // Servir arquivos estáticos da pasta 'public' (exemplo: http://localhost:port/img/logo.png)
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'pages')));  // HTMLs
 
 // Rota principal que serve o arquivo 'home.html'
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname,'pages','home', 'home.html'));
 });
+
+app.get('/escolha-filme', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pages', 'escolhaFilme', 'escolhaFilme.html'));
+});
+
+const filmeRoutes = require('./routes/filmeRoutes'); 
+app.use('/api', filmeRoutes);
+
+const sessaoRoutes = require('./routes/sessaoRoutes');
+app.use('/api', sessaoRoutes);
 
 const mainSocket = require('./sockets/mainSocket');
 mainSocket(io);
