@@ -1,15 +1,17 @@
--- Remove o banco de dados existente, se houver
+-- Remove o banco de dados existente com o nome 'sistema_login', se ele já existir.
 -- DROP DATABASE IF EXISTS cinema;
 
--- Cria o banco de dados com suporte a caracteres especiais e ordenação Unicode
+-- Cria o banco de dados 'cinema', caso ele ainda não exista.
+-- Utiliza o charset UTF-8 completo (utf8mb4), que suporta emojis e todos os caracteres Unicode,
+-- e usa a collation (regras de ordenação/comparação) adequada para Unicode.
 CREATE DATABASE IF NOT EXISTS cinema
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
--- Define o banco de dados atual para uso
+-- Define que todas as próximas instruções SQL serão executadas dentro do banco de dados 'cinema'.
 USE cinema;
 
--- Tabela de usuários do sistema
+-- Cria a tabela 'usuarios':
 CREATE TABLE IF NOT EXISTS usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     data_cadastro DATE,
@@ -23,7 +25,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     tipo_acesso ENUM('cliente', 'atendente', 'admin')
 );
 
--- Tabela com informações dos filmes em cartaz
+-- Cria a tabela 'filmes' contendo informações dos filmes em cartaz
 CREATE TABLE IF NOT EXISTS filmes (
     id_filme INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255),
@@ -34,7 +36,7 @@ CREATE TABLE IF NOT EXISTS filmes (
     imagem_url VARCHAR(255)
 );
 
--- Tabela das salas de exibição do cinema
+-- Cria a tabela 'salas' para gerenciar os locais de exibição dos filmes:
 CREATE TABLE IF NOT EXISTS salas (
     id_sala INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50),
@@ -42,7 +44,7 @@ CREATE TABLE IF NOT EXISTS salas (
     tipo ENUM('2D', '3D', 'VIP (programa_fidelidade)')
 );
 
--- Tabela com os assentos vinculados a cada sala
+-- Cria a tabela 'assentos' vinculados a cada sala de exibição dos filmes
 CREATE TABLE IF NOT EXISTS assentos (
     id_assento INT AUTO_INCREMENT PRIMARY KEY,
     id_sala INT,
@@ -50,7 +52,7 @@ CREATE TABLE IF NOT EXISTS assentos (
     FOREIGN KEY (id_sala) REFERENCES salas(id_sala)
 );
 
--- Sessões disponíveis para exibição dos filmes
+-- Cria a tabela 'sessoes' que serão disponíveis para exibição dos filmes
 CREATE TABLE IF NOT EXISTS sessoes (
     id_sessao INT AUTO_INCREMENT PRIMARY KEY,
     id_filme INT,
@@ -61,7 +63,7 @@ CREATE TABLE IF NOT EXISTS sessoes (
     FOREIGN KEY (id_sala) REFERENCES salas(id_sala)
 );
 
--- Tabela com os ingressos vendidos ou reservados
+-- Cria a tabela 'ingressos' para vendidos ou reservados
 CREATE TABLE IF NOT EXISTS ingressos (
     id_ingresso INT AUTO_INCREMENT PRIMARY KEY,
     id_sessao INT,
@@ -72,7 +74,7 @@ CREATE TABLE IF NOT EXISTS ingressos (
     FOREIGN KEY (id_assento) REFERENCES assentos(id_assento)
 );
 
--- Tabela de reservas feitas online
+-- Cria a tabela 'reservas' para compras online
 CREATE TABLE IF NOT EXISTS reservas (
     id_reserva INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
@@ -84,7 +86,7 @@ CREATE TABLE IF NOT EXISTS reservas (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 
--- Tabela de produtos diversos vendidos no cinema
+-- Cria a tabela 'produtos_diversos' para qualquer item vendido no cinema fora os ingressos
 CREATE TABLE IF NOT EXISTS produtos_diversos (
     id_produto INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100),
@@ -95,7 +97,7 @@ CREATE TABLE IF NOT EXISTS produtos_diversos (
     estoque_minimo INT
 );
 
--- Tabela de programas de fidelidade assinados pelos clientes
+-- Cria a tabela 'programas_fidelidade' para assinaturas de clientes
 CREATE TABLE IF NOT EXISTS programas_fidelidade (
     id_programa_fidelidade INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
@@ -109,7 +111,7 @@ CREATE TABLE IF NOT EXISTS programas_fidelidade (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 
--- Tabela de promoções disponíveis
+-- Cria a tabela 'promocoes'
 CREATE TABLE IF NOT EXISTS promocoes (
     id_promocao INT AUTO_INCREMENT PRIMARY KEY,
     id_programa_fidelidade INT,
@@ -123,7 +125,7 @@ CREATE TABLE IF NOT EXISTS promocoes (
     CHECK (data_inicio <= data_fim)
 );
 
--- Tabela de vendas de ingressos e produtos
+-- Cria a tabela 'vendas' para registro de ingressos ou produtos
 CREATE TABLE IF NOT EXISTS vendas (
     id_venda INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
@@ -136,7 +138,7 @@ CREATE TABLE IF NOT EXISTS vendas (
     FOREIGN KEY (id_promocao) REFERENCES promocoes(id_promocao)
 );
 
--- Histórico de vendas
+-- Cria a tabela 'historicos_vendas'
 CREATE TABLE IF NOT EXISTS historicos_vendas (
     id_historico_venda INT AUTO_INCREMENT PRIMARY KEY,
     id_venda INT,
@@ -146,7 +148,7 @@ CREATE TABLE IF NOT EXISTS historicos_vendas (
     FOREIGN KEY (id_venda) REFERENCES vendas(id_venda)
 );
 
--- Itens de uma venda
+-- Cria a tabela 'itens' de venda
 CREATE TABLE IF NOT EXISTS itens (
     id_item INT AUTO_INCREMENT PRIMARY KEY,
     id_ingresso INT,
@@ -158,7 +160,7 @@ CREATE TABLE IF NOT EXISTS itens (
     FOREIGN KEY (id_produto) REFERENCES produtos_diversos(id_produto)
 );
 
--- Avaliações feitas por usuários
+-- Cria a tabela 'avaliacoes' feitas por usuários
 CREATE TABLE IF NOT EXISTS avaliacoes (
     id_avaliacao INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
@@ -169,7 +171,7 @@ CREATE TABLE IF NOT EXISTS avaliacoes (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 
--- Anúncios no sistema
+-- Cria a tabela 'anuncios' dentro do sistema
 CREATE TABLE IF NOT EXISTS anuncios (
     id_anuncio INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255),
@@ -211,12 +213,14 @@ CREATE TABLE IF NOT EXISTS anuncio_filme (
     FOREIGN KEY (id_filme) REFERENCES filmes(id_filme)
 );
 
- -- Excluir usuário no MariaDB (se existir)
- -- DROP USER IF EXISTS 'admin'@'localhost'; 
- 
- -- Criação do usuário do banco de dados com senha (se não existir)
- CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY '1234567'; 
--- Conceder permissões ao usuário (somente no banco específico)
- GRANT ALL PRIVILEGES ON cinema.* TO 'admin'@'localhost'; 
- -- Aplicar os privilégios
- FLUSH PRIVILEGES;
+-- (Opcional) Remove o usuário do MySQL chamado 'admin' que se conecta localmente, se ele já existir (isso evita erros ao tentar criar um usuário que já existe).
+-- DROP USER IF EXISTS 'admin'@'localhost';
+
+-- Cria o usuário do MySQL chamado 'admin' que se conecta a partir do localhost, com a senha '1234567' (esse usuário será usado pela aplicação Node.js para se conectar ao banco de dados).
+CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY '1234567';
+
+-- Conceder ao usuário 'admin' acesso completo (todos os privilégios) apenas no banco de dados 'sistema_login' (isso permite que o usuário possa criar, ler, atualizar e deletar dados dentro desse banco específico).
+GRANT ALL PRIVILEGES ON cinema.* TO 'admin'@'localhost';
+
+-- Aplica imediatamente todas as mudanças de permissões feitas com o comando GRANT.
+FLUSH PRIVILEGES;

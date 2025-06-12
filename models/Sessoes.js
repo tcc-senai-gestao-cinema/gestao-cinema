@@ -1,6 +1,6 @@
 // models/Sessao.js
 const { DataTypes } = require('sequelize');
-const dataBase = require('../database/connection');
+const dataBase = require('../config/dataBase');
 
 const Sessao = dataBase.define('Sessao', {
   id_sessao: {

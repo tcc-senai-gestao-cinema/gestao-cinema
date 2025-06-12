@@ -1,4 +1,4 @@
-const dataBase = require('./database/connection'); // importa conexão
+const dataBase = require('./config/dataBase'); // importa conexão
 const Usuario = require('./models/Usuario'); // importa modelo Usuario
 
 async function criarUsuario() {
