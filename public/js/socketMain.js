@@ -1,0 +1,1 @@
+window.socket = io();  // Cria o socket global
