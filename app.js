@@ -14,20 +14,19 @@ app.use(express.json());
 
 // Servir arquivos estáticos da pasta 'public' (exemplo: http://localhost:port/img/logo.png)
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'pages')));  // HTMLs
 
 // Rota principal que serve o arquivo 'home.html'
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname,'pages','home', 'home.html'));
 });
 
-app.get('/escolha-filme', (req, res) => {
+app.get('/programacao', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages', 'escolhaFilme', 'escolhaFilme.html'));
 });
 
+// Mudar essas rotas
 const filmeRoutes = require('./routes/filmeRoutes'); 
 app.use('/api', filmeRoutes);
-
 const sessaoRoutes = require('./routes/sessaoRoutes');
 app.use('/api', sessaoRoutes);
 

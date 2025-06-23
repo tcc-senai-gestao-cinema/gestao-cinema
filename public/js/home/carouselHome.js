@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Indicadores (bolinhas)
       const button = document.createElement('button');
       button.type = 'button';
-      button.setAttribute('data-bs-target', '#carouselExampleCaptions');
+      button.setAttribute('data-bs-target', '#carouselHome');
       button.setAttribute('data-bs-slide-to', index);
       button.setAttribute('aria-label', `Slide ${index + 1}`);
       if (index === 0) {
@@ -31,7 +31,15 @@ document.addEventListener('DOMContentLoaded', () => {
       img.className = 'd-block w-100';
       img.alt = anuncio.titulo;
 
-      item.appendChild(img);
+      if (anuncio.link_destino && anuncio.link_destino.trim() !== '') {
+        const link = document.createElement('a');
+        link.href = anuncio.link_destino;
+        link.target = '_blank'; // Abre em nova aba
+        link.appendChild(img);
+        item.appendChild(link);
+      } else {
+        item.appendChild(img);
+      }
 
       // Opcional: legenda
       const caption = document.createElement('div');
@@ -44,6 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
       item.appendChild(caption);
 
       inner.appendChild(item);
+    });
+
+    // Inicializa o carrossel com troca automática a cada 5 segundos (5000ms)
+    const carouselElement = document.querySelector('#carouselHome');
+    const carousel = new bootstrap.Carousel(carouselElement, {
+      interval: 7000,
+      ride: 'carousel'
     });
   });
 });
