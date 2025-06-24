@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(filme);
       const card = `
         <div class="col-md-2 col-sm-4 col-6">
-          <a href="/programacao?id=${filme.id_filme}" class="card-link">
+          <a href="/programacao?id_filme=${filme.id_filme}" class="card-link">
             <div class="card cartão">
               <img src="${filme.imagem_url}" class="card-img-top" alt="${filme.titulo}">
               <div class="card-body text-center">

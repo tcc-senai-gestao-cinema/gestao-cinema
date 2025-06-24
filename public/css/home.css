@@ -140,6 +140,49 @@
   object-fit: cover; /* Mantém o aspecto da imagem e preenche o espaço */
  
 }
+ 
+
+/* Garante que a coluna se comporte como um container flex e se estique */
+.col-md-2, .col-sm-4, .col-6 {
+  display: flex;
+  flex-direction: column; /* Organiza os itens filhos em coluna */
+  margin-bottom: 2rem; /* Adiciona um espaçamento inferior entre as linhas de cards */
+}
+
+/* Faz o link e o card ocuparem toda a altura da coluna */
+.card-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Essencial para ocupar toda a altura */
+  text-decoration: none; /* Remove o sublinhado do link */
+  color: inherit; /* Herda a cor do texto do elemento pai */
+}
+
+.card.cartão {
+  height: 100%; /* Faz o card preencher a altura do link */
+  display: flex;
+  flex-direction: column; /* Organiza a imagem e o corpo em coluna */
+}
+
+/* Faz o corpo do card crescer para ocupar o espaço restante */
+.card-body {
+  flex-grow: 1; /* Permite que este elemento cresça */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centraliza o título verticalmente no espaço disponível */
+}
+
+/* Garante que a imagem não distorça as dimensões do card */
+.card-img-top {
+  width: 100%;
+  height: 200px; /* Defina uma altura fixa para todas as imagens */
+  object-fit: cover; /* Faz a imagem cobrir o espaço sem se distorcer */
+}
+
+/* Opcional: Truncar texto do título se for muito grande */
+
+
+
 
 /* Media query para telas com largura máxima de 768 pixels (tablets e alguns dispositivos móveis maiores) */
 @media (max-width: 768px) {

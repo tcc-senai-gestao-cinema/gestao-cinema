@@ -45,8 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const caption = document.createElement('div');
       caption.className = 'carousel-caption d-none d-md-block';
       caption.innerHTML = `
-        <h5>${anuncio.titulo}</h5>
-        <p>${anuncio.descricao}</p>
+        
       `;
 
       item.appendChild(caption);
