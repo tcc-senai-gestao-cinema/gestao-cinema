@@ -11,13 +11,17 @@ const PORT = 3000; // Define a porta que o site opera
 
 // Habilitar o parser de JSON
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true }));
 // Servir arquivos estáticos da pasta 'public' (exemplo: http://localhost:port/img/logo.png)
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Rota principal que serve o arquivo 'home.html'
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname,'pages','home', 'home.html'));
+app.get(['/home', '/home/'], (req, res) => {
+    res.sendFile(path.join(__dirname, 'pages', 'home', 'home.html'));
+});
+
+app.get(['/', '/'], (req, res) => {
+    res.sendFile(path.join(__dirname, 'pages', 'home', 'home.html'));
 });
 
 app.get('/programacao', (req, res) => {
@@ -29,6 +33,10 @@ const filmeRoutes = require('./routes/filmeRoutes');
 app.use('/api', filmeRoutes);
 const sessaoRoutes = require('./routes/sessaoRoutes');
 app.use('/api', sessaoRoutes);
+const loginRoutes = require('./routes/loginRoutes');
+app.use('/', loginRoutes);      // /login (GET e POST)
+const cadastroRoutes = require('./routes/cadastroRoutes');
+app.use('/', cadastroRoutes);   // /cadastro (GET e POST)
 
 const mainSocket = require('./sockets/mainSocket');
 mainSocket(io);
