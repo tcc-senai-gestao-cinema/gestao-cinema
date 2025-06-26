@@ -22,6 +22,7 @@
     <div class="container mt-4">
       <h2>Editar Perfil</h2>
       <form action="/editar-perfil" method="POST" class="card p-4" novalidate>
+  
         <div class="mb-3">
           <label for="nome" class="form-label">Nome</label>
           <input
@@ -43,20 +44,6 @@
             class="form-control"
             value="%%EMAIL%%"
             required
-          />
-        </div>
-
-        <div class="mb-3">
-          <label for="cpf" class="form-label">CPF</label>
-          <input
-            type="text"
-            id="cpf"
-            name="cpf"
-            class="form-control"
-            value="%%CPF%%"
-            required
-            pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
-            title="Formato esperado: 000.000.000-00"
           />
         </div>
 
