@@ -1,0 +1,190 @@
+/* Estilos para a imagem dentro da barra de navegação (cabeçalho) */
+.navbar-brand img {
+    margin-right: 10px; /* Adiciona um espaço de 10 pixels à direita da imagem, separando-a do texto. */
+    margin-top: -16px; /* Ajusta a posição vertical da imagem, movendo-a 16 pixels para cima. */
+    height: 15%; /* Define a altura da imagem como 15% da altura do seu elemento pai. */
+}
+
+/* Estilos para o texto (título) dentro da barra de navegação */
+.navbar-brand span {
+    font-family: 'Alkalami'; /* Define a fonte do texto para 'Alkalami'. */
+    font-size: 24px; /* Define o tamanho da fonte do texto para 24 pixels. */
+}
+
+/* Estilos para o fundo da barra de navegação (cabeçalho) */
+.container-fluid {
+    z-index: 200;
+    margin-bottom: -12px; /* Define uma margem negativa inferior de 12 pixels, possivelmente para reduzir o espaço abaixo do cabeçalho. */
+}
+
+
+/* Estilos para elementos com o ID "titulos" */
+#titulos {
+    margin-top: 20px; /* Adiciona uma margem superior de 20 pixels, afastando o título de elementos acima. */
+    font-family: 'Poppins', sans-serif; /* Define a fonte para 'Poppins' e, se não estiver disponível, usa uma fonte sans-serif genérica. */
+    font-weight: 700; /* Define a espessura da fonte como negrito. */
+    font-size: 26px; /* Define o tamanho da fonte para 26 pixels. */
+    color: black; /* Define a cor do texto como preto. */
+}
+
+/* Estilos para o rodapé */
+footer {
+    background: linear-gradient(to right, rgb(255, 251, 43)20%, rgb(255, 255, 255) 50%);
+    color: black; /* Define a cor do texto como preto. */
+    padding: 10px; /* Adiciona um preenchimento de 10 pixels em todos os lados. */
+    text-align: center; /* Centraliza o texto dentro do rodapé. */
+    width: 100%; /* Ocupa toda a largura disponível. */
+    font-weight: 700; /* Define a espessura da fonte como negrito. */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  
+}
+
+.container {
+    
+  max-width: 600px;
+  margin: 40px auto;
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-color: rgb(0, 0, 0) !important;
+  border: 1px solid !important;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+.pontos {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.2em;
+}
+
+.catalogo-premios {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.premio {
+  background: #ffffff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.premio button {
+  padding: 8px 16px;
+  background-color: rgb(255, 251, 43) !important;
+  border-color: rgb(0, 0, 0) !important;
+  border: 2px solid !important;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+
+
+.mensagem {
+  margin-top: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+ 
+
+
+
+
+
+
+
+
+
+
+
+#botaoRegras {
+  display: block;
+  margin: 0 auto 20px auto;
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: rgb(255, 251, 43) !important;
+  border-color: rgb(0, 0, 0) !important;
+  border: 2px solid !important;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+}
+
+
+
+.box-regras {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+.box-regras h3 {
+  margin-top: 0;
+}
+
+.box-regras ul {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+.box-regras button {
+  margin-top: 20px;
+  padding: 8px 16px;
+background-color: rgb(255, 251, 43) !important;
+  border-color: rgb(0, 0, 0) !important;
+  border: 2px solid !important;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.box-regras button:hover {
+  background-color: #f6f933;
+}
+
+.oculto {
+  display: none;
+}

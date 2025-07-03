@@ -6,6 +6,7 @@ module.exports = (io) => {
   io.on('connection', async (socket) => {
     console.log('Usuário(a) conectado(a):', socket.id);
 
+
     // Envia lista de filmes ao conectar
     try {
       const filmes = await Filme.findAll(); // consulta ao banco de dados
