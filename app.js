@@ -33,6 +33,10 @@ app.get('/pontoEregra', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages', 'pontoEregra', 'pontoEregra.html'));
 });
 
+app.get('/lojinha', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pages', 'lojinha', 'lojinha.html'));
+});
+
 // Mudar essas rotas
 const filmeRoutes = require('./routes/filmeRoutes'); 
 app.use('/api', filmeRoutes);
@@ -44,7 +48,8 @@ const cadastroRoutes = require('./routes/cadastroRoutes');
 app.use('/', cadastroRoutes);   // /cadastro (GET e POST)
 const fidelidadeRoutes = require('./routes/fidelidadeRoutes');
 app.use('/fidelidade', fidelidadeRoutes);
-
+const lojinhaRoutes = require('./routes/lojinhaRoutes');
+app.use('/lojinha', lojinhaRoutes);
 
 const mainSocket = require('./sockets/mainSocket');
 mainSocket(io);

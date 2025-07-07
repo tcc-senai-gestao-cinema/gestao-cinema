@@ -1,5 +1,5 @@
 -- Remove o banco de dados existente com o nome 'sistema_login', se ele já existir.
--- DROP DATABASE IF EXISTS cinema;
+DROP DATABASE IF EXISTS cinema;
 
 -- Cria o banco de dados 'cinema', caso ele ainda não exista.
 -- Utiliza o charset UTF-8 completo (utf8mb4), que suporta emojis e todos os caracteres Unicode,
@@ -93,6 +93,7 @@ CREATE TABLE IF NOT EXISTS produtos_diversos (
     categoria VARCHAR(100),
     preco DECIMAL(10, 2),
     descricao TEXT,
+    imagem_url VARCHAR(255),
     estoque INT,
     estoque_minimo INT
 );
@@ -101,13 +102,9 @@ CREATE TABLE IF NOT EXISTS produtos_diversos (
 CREATE TABLE IF NOT EXISTS programas_fidelidade (
     id_programa_fidelidade INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
-    nome VARCHAR(100),
-    preco DECIMAL(10,2),
-    pontos_acumulados INT,
-    mensalidade_ativa BOOLEAN,
+    regra VARCHAR(1000),
+    pontos INT,
     data_inicio DATE,
-    data_renovacao DATE,
-    cupons_promocionais INT,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 
@@ -121,6 +118,7 @@ CREATE TABLE IF NOT EXISTS promocoes (
     data_inicio DATE,
     data_fim DATE,
     tipo ENUM('comum', 'programa_fidelidade'),
+    imagem_url VARCHAR(255),
     FOREIGN KEY (id_programa_fidelidade) REFERENCES programas_fidelidade(id_programa_fidelidade),
     CHECK (data_inicio <= data_fim)
 );
@@ -151,11 +149,13 @@ CREATE TABLE IF NOT EXISTS historicos_vendas (
 -- Cria a tabela 'itens' de venda
 CREATE TABLE IF NOT EXISTS itens (
     id_item INT AUTO_INCREMENT PRIMARY KEY,
+    id_venda INT, 
     id_ingresso INT,
     id_produto INT,
     tipo ENUM('ingresso', 'produto'),
     quantidade INT,
     preco_unitario DECIMAL(10,2),
+    FOREIGN KEY (id_venda) REFERENCES vendas(id_venda), -- Ligação com a venda
     FOREIGN KEY (id_ingresso) REFERENCES ingressos(id_ingresso),
     FOREIGN KEY (id_produto) REFERENCES produtos_diversos(id_produto)
 );
@@ -212,6 +212,40 @@ CREATE TABLE IF NOT EXISTS anuncio_filme (
     FOREIGN KEY (id_anuncio) REFERENCES anuncios(id_anuncio),
     FOREIGN KEY (id_filme) REFERENCES filmes(id_filme)
 );
+
+INSERT INTO filmes (titulo, genero, duracao, classificacao_indicativa, sinopse, imagem_url)
+VALUES 
+('Vingadores: Ultimato', 'Ação', 181, '14 anos', 'Após os eventos devastadores de Guerra Infinita, os Vingadores tentam desfazer o caos causado por Thanos.', 'http://localhost:3000/img/home/teste2.jpg'),
+('Divertida Mente 2', 'Animação', 100, 'Livre', 'Riley agora adolescente enfrenta novas emoções e desafios em sua mente em constante evolução.', 'http://localhost:3000/img/home/teste1.jpg');
+
+INSERT INTO anuncios 
+(titulo, descricao, imagem_url, data_inicio, data_fim, ativo, tipo, link_destino, prioridade) 
+VALUES
+('Imagem 1', 'Descrição da imagem 1', 'http://localhost:3000/img/home/image6.png', '2024-01-01', '2025-12-31', true, 'carrossel', 'http://localhost:3000/programacao?id=1', 1),
+('Imagem 2', 'Descrição da imagem 3', 'http://localhost:3000/img/home/teste2.jpg', '2024-01-01', '2025-12-31', true, 'carrossel', 'http://localhost:3000/programacao?id=1', 3),
+('Imagem 3', 'Descrição da imagem 4', 'http://localhost:3000/img/home/teste3.jpg', '2024-01-01', '2025-12-31', true, 'carrossel', 'http://localhost:3000/programacao?id=2', 2);
+
+INSERT INTO sessoes (id_filme, data, horario) VALUES
+(1, '2025-06-20', '19:30'),
+(1, '2025-06-21', '20:40'),
+(2, '2025-07-22', '09:30'),
+(2, '2025-05-10', '15:10'),
+(2, '2025-06-24', '00:10');
+
+INSERT INTO filmes (titulo, genero, duracao, classificacao_indicativa, sinopse, imagem_url)
+VALUES 
+('Vingadores: Ultimato', 'Ação', 181, '14 anos', 'Após os eventos devastadores de Guerra Infinita, os Vingadores tentam desfazer o caos causado por Thanos.', 'http://localhost:3000/img/home/teste2.jpg'),
+('Divertida Mente 2', 'Animação', 100, 'Livre', 'Riley agora adolescente enfrenta novas emoções e desafios em sua mente em constante evolução.', 'http://localhost:3000/img/home/teste1.jpg'),
+('Vingadores: Ultimato', 'Ação', 181, '14 anos', 'Após os eventos devastadores de Guerra Infinita, os Vingadores tentam desfazer o caos causado por Thanos.', 'http://localhost:3000/img/home/teste2.jpg'),
+('Divertida Mente 2', 'Animação', 100, 'Livre', 'Riley agora adolescente enfrenta novas emoções e desafios em sua mente em constante evolução.', 'http://localhost:3000/img/home/teste1.jpg');
+
+
+INSERT INTO produtos_diversos (nome, descricao, preco, imagem_url, estoque) VALUES
+('Pipoca Grande', 'Pipoca salgada feita na hora.', 15.00, 'http://localhost:3000/img/home/image6.png', 100),
+('Refrigerante 500ml', 'Coca-Cola, Guaraná ou Fanta.', 8.00, 'http://localhost:3000/img/home/image6.png', 200),
+('Combo Casal', '2 Pipocas Médias + 2 Refrigerantes 500ml.', 40.00, 'http://localhost:3000/img/home/image6.png', 50);
+
+
 
 -- (Opcional) Remove o usuário do MySQL chamado 'admin' que se conecta localmente, se ele já existir (isso evita erros ao tentar criar um usuário que já existe).
 -- DROP USER IF EXISTS 'admin'@'localhost';

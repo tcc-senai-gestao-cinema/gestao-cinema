@@ -232,3 +232,7 @@ html {
   padding: 0;
   overflow-x: hidden; /* Previne barra de rolagem horizontal */
 }
+.row.align-items-start{
+  margin-left: 45px;
+
+}
