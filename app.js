@@ -35,7 +35,7 @@ server.listen(PORT, '0.0.0.0', () => {
 
 /* ============================ INFORMAÇÕES ÚTEIS ============================
 Para clonar no GIT:
-> git clone <https://github.com/tcc-senai-gestao-cinema/gestao-cinema.git>
+> git clone https://github.com/tcc-senai-gestao-cinema/gestao-cinema.git
 
 Dependências utilizadas no projeto:
 Instalados:
