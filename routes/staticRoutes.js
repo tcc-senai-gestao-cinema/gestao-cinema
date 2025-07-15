@@ -32,5 +32,10 @@ router.get('/lojinha', (req, res) => {
     res.sendFile(path.join(__dirname, '../pages/lojinha/lojinha.html'));
 });
 
+// Página da lojinha
+router.get('/distribuicaoDoPublico', (req, res) => {
+    res.sendFile(path.join(__dirname, '../pages/distribuicaoDoPublico/distribuicaoDoPublico.html'));
+});
+
 // Exporta o roteador
 module.exports = router;
