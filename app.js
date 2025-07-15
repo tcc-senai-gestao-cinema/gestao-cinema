@@ -1,74 +1,56 @@
-const http = require('http'); 
+// Importações principais
+const http = require('http'); // Módulo nativo para criar servidor HTTP
 const express = require('express'); // Framework para criar o servidor web
-const { Server } = require('socket.io');
-const path = require('path'); // Fornece utilitários para trabalhar com caminhos de arquivos e diretórios de forma
+const { Server } = require('socket.io'); // Biblioteca para comunicação em tempo real com WebSockets
 
 const app = express(); // Cria uma instância da aplicação Express
-const server = http.createServer(app); // Usa http.createServer
-const io = new Server(server); // conecta o socket.io ao servidor http
+const server = http.createServer(app); // Cria o servidor HTTP usando Express
+const io = new Server(server); // Conecta o socket.io ao servidor HTTP
 
-const PORT = 3000; // Define a porta que o site opera
+const PORT = 3000; // Define a porta que o site irá operar
 
-// Habilitar o parser de JSON
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// ================= MIDDLEWARES =================
 
-// Servir arquivos estáticos da pasta 'public' (exemplo: http://localhost:port/img/logo.png)
-app.use(express.static(path.join(__dirname, 'public')));
+// Middlewares globais para o Express (como body parser e arquivos estáticos)
+require('./middlewares/indexMiddlewares')(app);
 
-// Rota principal que serve o arquivo 'home.html'
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname,'pages','home', 'home.html'));
-});
+// ================= ROTAS =======================
 
-app.get('/programacao', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'escolhaFilme', 'escolhaFilme.html'));
-});
+// Importa e registra todas as rotas disponíveis (HTML + API REST)
+require('./routes/indexRoutes')(app);
 
-app.get('/fidelidade', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'fidelidade', 'fidelidade.html'));
-});
+// ================= SOCKET.IO ===================
 
-app.get('/pontoEregra', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'pontoEregra', 'pontoEregra.html'));
-});
-
-app.get('/lojinha', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages', 'lojinha', 'lojinha.html'));
-});
-
-// Mudar essas rotas
-const filmeRoutes = require('./routes/filmeRoutes'); 
-app.use('/api', filmeRoutes);
-const sessaoRoutes = require('./routes/sessaoRoutes');
-app.use('/api', sessaoRoutes);
-const loginRoutes = require('./routes/loginRoutes');
-app.use('/', loginRoutes);      // /login (GET e POST)
-const cadastroRoutes = require('./routes/cadastroRoutes');
-app.use('/', cadastroRoutes);   // /cadastro (GET e POST)
-const fidelidadeRoutes = require('./routes/fidelidadeRoutes');
-app.use('/fidelidade', fidelidadeRoutes);
-const lojinhaRoutes = require('./routes/lojinhaRoutes');
-app.use('/lojinha', lojinhaRoutes);
-
+// Carrega e inicializa o socket principal da aplicação (eventos em tempo real)
 const mainSocket = require('./sockets/mainSocket');
 mainSocket(io);
 
+// ================= SERVIDOR ====================
+
+// Inicializa o servidor e escuta na porta definida
 server.listen(PORT, '0.0.0.0', () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
-    console.log(`Servidor acessível na rede: http://<seu-ip-local>:${PORT}`);
+    console.log(`Servidor acessível na rede local: http://<seu-ip-local>:${PORT}`);
 });
 
-/* No console dentro da página do projeto */
-// Para clones do GitHub (as dependências são baixadas automaticamente)
-//npm install
+/* ============================ INFORMAÇÕES ÚTEIS ============================
+Para clonar no GIT:
+> git clone <https://github.com/tcc-senai-gestao-cinema/gestao-cinema.git>
 
-// Dependências instaladas
-//npm init -y
-//npm install express
-//npm install sequelize
-//npm install mysql2
-//npm install socket.io
+Dependências utilizadas no projeto:
+Instalados:
+- express          # Framework para servidor Web
+- sequelize        # ORM para banco de dados
+- mysql2           # Driver para conectar com MySQL
+- socket.io        # Comunicação em tempo real com WebSockets
+Serão instalados:
+- moment           # Manipulação de datas
 
-// Ainda vão ser instaladas
-//npm install moment
+Comandos para instalar as dependências do zero:
+> npm init -y
+> npm install express sequelize mysql2 socket.io moment
+
+Comando para instalar todas as dependências  de uma vez:
+> npm install
+
+======================================================================== */
