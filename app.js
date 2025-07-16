@@ -53,4 +53,8 @@ Comandos para instalar as dependências do zero:
 Comando para instalar todas as dependências  de uma vez:
 > npm install
 
+Comandos para finalizar um servidor que já está rodando na porta 3000:
+> netstat -ano | findstr :3000
+> taskkill /PID <num> /F
+
 ======================================================================== */
