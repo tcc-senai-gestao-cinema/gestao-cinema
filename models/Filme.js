@@ -31,6 +31,10 @@ const Filme = dataBase.define('Filme', {
   imagem_url: {
     type: DataTypes.STRING(255),
     allowNull: true
+  },
+  tipo: {
+    type: DataTypes.ENUM('2D', '3D'),
+    allowNull: true
   }
 }, {
   tableName: 'filmes',

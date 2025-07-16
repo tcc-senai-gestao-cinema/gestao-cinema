@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS filmes (
     duracao INT,
     classificacao_indicativa VARCHAR(50),
     sinopse TEXT,
-    imagem_url VARCHAR(255)
+    imagem_url VARCHAR(255),
+    tipo ENUM('2D', '3D')
 );
 
 -- Cria a tabela 'local_de_exibicao' para gerenciar os locais de exibição
@@ -41,7 +42,7 @@ CREATE TABLE IF NOT EXISTS locais_de_exibicoes (
     id_local_de_exibicao INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50),  -- (ex: Nome da sala, coliseu, teatro, explanada)
     capacidade INT,
-    tipo ENUM('2D', '3D', 'VIP (programa_fidelidade)')
+    tipo ENUM('aberto', 'fechado')
 );
 
 -- Cria a tabela 'vagas' vinculados a cada local de exibição
@@ -51,7 +52,7 @@ CREATE TABLE IF NOT EXISTS vagas (
     tipo ENUM('normal', 'casal', 'cadeira de rodas', 'preferencial', 'veiculo_pequeno', 'veiculo_medio', 'veiculo_grande') NOT NULL,
     status ENUM('disponível', 'reservado', 'ocupado') DEFAULT 'disponível',
     reserva_data DATETIME,
-    FOREIGN KEY (id_local_de_exibicao) REFERENCES locais_de_exibicao(id_local_de_exibicao),
+    FOREIGN KEY (id_local_de_exibicao) REFERENCES locais_de_exibicoes(id_local_de_exibicao)
 );
 
 -- Cria a tabela 'areas_do_publico' vinculados a cada local de exibição
@@ -63,7 +64,7 @@ CREATE TABLE IF NOT EXISTS areas_do_publico (
     lotacao INT,
     lotacao_atual INT DEFAULT 0,
     status ENUM('disponível', 'lotado', 'em andamento') DEFAULT 'disponível',
-    FOREIGN KEY (id_local_de_exibicao) REFERENCES locais_de_exibicao(id_local_de_exibicao)
+    FOREIGN KEY (id_local_de_exibicao) REFERENCES locais_de_exibicoes(id_local_de_exibicao)
 );
 
 
@@ -75,7 +76,7 @@ CREATE TABLE IF NOT EXISTS sessoes (
     data DATE,
     horario TIME,
     FOREIGN KEY (id_filme) REFERENCES filmes(id_filme),
-    FOREIGN KEY (id_local_de_exibicao) REFERENCES locais_de_exibicao(id_local_de_exibicao)
+    FOREIGN KEY (id_local_de_exibicao) REFERENCES locais_de_exibicoes(id_local_de_exibicao)
 );
 
 -- Cria a tabela 'ingressos' para vendidos ou reservados
