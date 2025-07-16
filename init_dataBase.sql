@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS filmes (
 );
 
 -- Cria a tabela 'local_de_exibicao' para gerenciar os locais de exibição
-CREATE TABLE IF NOT EXISTS locais_de_exibicao (
+CREATE TABLE IF NOT EXISTS locais_de_exibicoes (
     id_local_de_exibicao INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50),  -- (ex: Nome da sala, coliseu, teatro, explanada)
     capacidade INT,
@@ -211,7 +211,7 @@ CREATE TABLE IF NOT EXISTS reserva_vaga (
 );
 
 -- Relação N:N entre programas de fidelidade e promoções
-CREATE TABLE IF NOT EXISTS programa_promocao (
+CREATE TABLE IF NOT EXISTS programa_fidelidade_promocao (
     id_programa_fidelidade INT,
     id_promocao INT,
     PRIMARY KEY (id_programa_fidelidade, id_promocao),
