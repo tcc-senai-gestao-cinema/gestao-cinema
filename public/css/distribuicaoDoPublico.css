@@ -1,131 +1,38 @@
-
-
-.tela {
-
-    width: 1100px;
-    height: 50px;
-    background-color: #000000;
-    margin: 0 auto; /* Centraliza horizontalmente */
-    border-radius: 8px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 1.2rem;
-    width: calc(100% - 90px);
-    margin-left: 90px; 
-    
-}
-.selecao-assentos {
-
-    display: grid;
-    grid-template-columns: repeat(10, 50px); /* 10 cadeiras por linha */
-    gap: 10px;
-    justify-content: center;
-    margin-left: 60px; /* Define uma margem à esquerda de 80 pixels, provavelmente para dar espaço à barra lateral fixa. */
-    width: calc(100% - 90px); /* Define a largura do container como 100% menos 70 pixels (um pouco menor que a largura da sidebar, pode haver um ajuste). */
-    position: relative; /* Define a posição como relativa para que elementos internos possam ser posicionados relativamente a ele. */
-    padding-bottom: 20px; /* ou 120px se precisar de mais espaço */
-    }
-
-
-    .cadeira {
-        width: 12vw;               /* largura responsiva */
-        max-width: 50px;           /* limite máximo para não ficar grande demais */
-        aspect-ratio: 1 / 1;       /* mantém sempre a forma quadrada */
-        background-color: #1bd63a;
-        border-radius: 20%;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: bold;
-        font-size: 0.8rem;         /* texto proporcional */
-      }
-
-.cadeira.ocupada {
-    background-color: #e08d2f; /* Cor para cadeiras ocupadas */
-    cursor: not-allowed;
-}
-
-.cadeira.selecionada {
-    background-color: #00e1ff; /* Cor para cadeiras selecionadas */
-
-}
-.info-selecao {
-    position:relative;
-    bottom: 10px;
-    margin-left: 100px; /* distância da sidebar (ajuste conforme a largura da sua sidebar) */
-    background-color: transparent; /* sem fundo, só texto */
-    color: #000;
-    font-size: 1rem;
-    font-weight: bold;
-    padding: 5px 10px;
-    pointer-events: none; /* garante que não atrapalha cliques */
-
- 
-  }
- 
-  .confimar-seçao{
-
-    background-color: rgb(255, 251, 43) !important;
-    border-color: rgb(0, 0, 0) !important;
-    color: #000 !important; /* Deixa o texto mais visível com fundo amarelo */
-    font-weight: 600 !important;
-    margin: 0 auto !important;
-    display: block !important;
-    width: 200px !important;
-    
-}
-.confimar-seçao:hover{
-background-color: rgb(255, 255, 255)!important; 
-}
-
-/* -------------------------------------------------------------------------------------------- */
-
-
-
-
-
-/* Estilos para a imagem dentro da barra de navegação (cabeçalho) */
+/* Estilos para a imagem dentro de cabeçalho */
 .navbar-brand img {
     margin-right: 10px; /* Adiciona um espaço de 10 pixels à direita da imagem, separando-a do texto. */
     margin-top: -16px; /* Ajusta a posição vertical da imagem, movendo-a 16 pixels para cima. */
     height: 15%; /* Define a altura da imagem como 15% da altura do seu elemento pai. */
 }
 
-/* Estilos para o texto (título) dentro da barra de navegação */
+/* Estilos para o texto (título) dentro de cabeçalho */
 .navbar-brand span {
     font-family: 'Alkalami'; /* Define a fonte do texto para 'Alkalami'. */
     font-size: 24px; /* Define o tamanho da fonte do texto para 24 pixels. */
 }
 
-/* Estilos para o fundo da barra de navegação (cabeçalho) */
+/* Estilos para o fundo de cabeçalho */
 .container-fluid {
     z-index: 200;
     margin-bottom: -12px; /* Define uma margem negativa inferior de 12 pixels, possivelmente para reduzir o espaço abaixo do cabeçalho. */
 }
 
-/* Estilos para a barra lateral */
+/* Estilos para a barra de navegação */
 .sidebar {
         width: 90px; /* Ou a largura desejada */
         background: linear-gradient(to bottom, rgb(255, 255, 255) 15%, rgb(255, 251, 43), rgb(255, 251, 43));
-        position: fixed; /* Fixa a barra lateral na tela */
-        top: 0; /* Alinha o topo da barra lateral ao topo da tela */
-        bottom: 0; /* Alinha a parte inferior da barra lateral à parte inferior da tela */
-        left: 0; /* Alinha a barra lateral à esquerda */
+        position: fixed; /* Fixa a barra de navegação na tela */
+        top: 0; /* Alinha o topo da barra de navegação ao topo da tela */
+        bottom: 0; /* Alinha a parte inferior da barra de navegação à parte inferior da tela */
+        left: 0; /* Alinha a barra de navegação à esquerda */
         display: flex;
         flex-direction: column;
         align-items: center; /* Centraliza os botões horizontalmente */
         justify-content: center; /* Centraliza os botões verticalmente */
         z-index: 100; /* Defina um valor de z-index para a sidebar */
     }
-    
 
-
-
-/* Estilos para os botões dentro da barra lateral */
+/* Estilos para os botões dentro da barra de navegação */
 .sidebar button {
     width: 40px; /* Define a largura dos botões para 40 pixels. */
     height: 40px; /* Define a altura dos botões para 40 pixels, criando botões quadrados. */
@@ -141,70 +48,41 @@ background-color: rgb(255, 255, 255)!important;
     margin-top: 15px; /* Adiciona uma margem superior de 15 pixels entre os botões. */
 }
 
-/* Estilos para os botões dentro da barra lateral quando o mouse passa por cima */
+/* Estilos para os botões dentro da barra de navegação quando o mouse passa por cima */
 .sidebar button:hover {
     background-color: rgb(255, 255, 255); /* Muda a cor de fundo para branco ao passar o mouse. */
 }
 
-/* Estilos específicos para o botão com o ID "botaoMeio" */
-#botaoMeio {
+/* Estilos específicos para o botão com o ID "botaoMaior" */
+#botaoMaior {
     width: 60px; /* Define a largura do botão para 60 pixels. */
     height: 60px; /* Define a altura do botão para 60 pixels, mantendo-o redondo. */
 }
 
+/* Estilos para o container principal do conteúdo, com uma classe adicional 'mt-1' (margin-top: 1) provavelmente definida em outro lugar (ex: Bootstrap) */
+.container-fluid.mt-1 {
+    margin-left: 90px; /* Define uma margem à esquerda de 80 pixels, provavelmente para dar espaço à barra de navegação fixa. */
+    width: calc(100% - 90px); /* Define a largura do container como 100% menos 70 pixels (um pouco menor que a largura da sidebar, pode haver um ajuste). */
+    position: relative; /* Define a posição como relativa para que elementos internos possam ser posicionados relativamente a ele. */
+}
 
 /* Media query para telas com largura máxima de 600 pixels (dispositivos móveis) */
 @media (max-width: 768px) {
-    .info-selecao {
-        margin-bottom: 50px;
-    
-      }
-    
-    .confimar-seçao {
-        position: sticky;
-        bottom: 90px; /* Fica sempre visível, acima da sidebar */
-        z-index: 999;
-      }
-    .tela {
-        margin: 0 auto; /* Centraliza horizontalmente */
-    }
-    .cadeira {  
-        width: 40px;
-        height: 40px;
-        background-color: #1bd63a;
-        border-radius: 20%;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: bold;
-    }
-    .selecao-assentos {
-
-        display: grid;
-        grid-template-columns: repeat(10, 50px); /* 10 cadeiras por linha */
-        gap: 5px;
-        justify-content: center;
-        position: relative; /* Define a posição como relativa para que elementos internos possam ser posicionados relativamente a ele. */
-        padding-bottom: 20px; /* ou 120px se precisar de mais espaço */
-        }
-    
     .sidebar {
-        position: fixed !important; /* Mantém a barra lateral fixa na tela, mesmo durante a rolagem, e força essa propriedade. */
-        top: auto !important;       /* Impede que a barra vá para o topo */
-        bottom: 0; /* Posiciona a barra lateral na parte inferior da tela. */
-        left: 0; /* Alinha a barra lateral à esquerda da tela. */
-        width: 100% !important; /* Define a largura da barra lateral para 100% da largura da tela e força essa propriedade. */
-        height: 70px !important; /* Define uma altura menor para a barra lateral em telas menores e força essa propriedade. */
-        flex-direction: row !important; /* Organiza os itens da barra lateral em uma linha horizontal e força essa propriedade. */
+        position: fixed !important; /* Mantém a barra de navegação fixa na tela, mesmo durante a rolagem, e força essa propriedade. */
+        top: auto !important; /* Impede que a barra vá para o topo */
+        bottom: 0; /* Posiciona a barra de navegação na parte inferior da tela. */
+        left: 0; /* Alinha a barra de navegação à esquerda da tela. */
+        width: 100% !important; /* Define a largura da barra de navegação para 100% da largura da tela e força essa propriedade. */
+        height: 70px !important; /* Define uma altura menor para a barra de navegação em telas menores e força essa propriedade. */
+        flex-direction: row !important; /* Organiza os itens da barra de navegação em uma linha horizontal e força essa propriedade. */
         justify-content: space-around !important; /* Distribui os botões com espaço igual entre eles e nas extremidades e força essa propriedade. */
-        align-items: center !important; /* Centraliza os botões verticalmente dentro da barra lateral e força essa propriedade. */
+        align-items: center !important; /* Centraliza os botões verticalmente dentro da barra de navegação e força essa propriedade. */
         padding: 10px 0 !important; /* Adiciona um pequeno preenchimento de 10 pixels na parte superior e inferior e força essa propriedade. */
         background: linear-gradient(to right, rgb(255, 255, 255), rgb(255, 251, 43)) !important;
         /* Define um gradiente horizontal do branco para o amarelo como fundo e força essa propriedade. */
-        z-index: 1000; /* Garante que a barra lateral fique acima de outros elementos na página. */
+        z-index: 1000; /* Garante que a barra de navegação fique acima de outros elementos na página. */
     }
-
 
     /* Remove classes verticais como flex-column e vh-100 (se aplicadas à .sidebar) */
     .sidebar.d-flex {
@@ -212,18 +90,106 @@ background-color: rgb(255, 255, 255)!important;
     }
 
     .sidebar button {
-        margin: 0 !important; /* Remove qualquer margem dos botões na barra lateral inferior e força essa propriedade. */
+        margin: 0 !important; /* Remove qualquer margem dos botões na barra de navegação inferior e força essa propriedade. */
     }
 
-   
+    /* Remove margem da esquerda do conteúdo */
+    .container-fluid.mt-1 {
+        margin-left: 0 !important; /* Remove a margem esquerda que era para a barra de navegação vertical e força essa propriedade. */
+        width: 100% !important; /* Define a largura para 100% em telas menores e força essa propriedade. */
+        padding-left: 3px; /* Adiciona um pequeno preenchimento à esquerda. */
+        padding-right: 3px; /* Adiciona um pequeno preenchimento à direita. */
+    }
+}
+
+/* Estilos para links dentro de cards */
+.card-link {
+    text-decoration: none; /* Remove o sublinhado padrão dos links. */
+    color: inherit; /* Faz com que a cor do link seja a mesma do texto ao redor. */
+}
+
+/* Estilos para links dentro de cards quando o mouse passa por cima */
+.card-link:hover {
+    opacity: 0.8; /* Diminui um pouco a opacidade do link ao passar o mouse, criando um efeito suave. */
+}
+
+/* Estilos para o container dos cards */
+.cards-container {
+    width: 100%;
+
+}
+
+.cartão img {
+  height: 250px; /* Altura fixa para a imagem */
+  object-fit: cover; /* Mantém o aspecto da imagem e preenche o espaço */
+ 
+}
+ 
+/* Garante que a coluna se comporte como um container flex e se estique */
+.col-md-2, .col-sm-4, .col-6 {
+  display: flex;
+  flex-direction: column; /* Organiza os itens filhos em coluna */
+  margin-bottom: 2rem; /* Adiciona um espaçamento inferior entre as linhas de cards */
+}
+
+/* Faz o link e o card ocuparem toda a altura da coluna */
+.card-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Essencial para ocupar toda a altura */
+  text-decoration: none; /* Remove o sublinhado do link */
+  color: inherit; /* Herda a cor do texto do elemento pai */
+}
+
+.card.cartão {
+  height: 100%; /* Faz o card preencher a altura do link */
+  display: flex;
+  flex-direction: column; /* Organiza a imagem e o corpo em coluna */
+}
+
+/* Faz o corpo do card crescer para ocupar o espaço restante */
+.card-body {
+  flex-grow: 1; /* Permite que este elemento cresça */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centraliza o título verticalmente no espaço disponível */
+}
+
+/* Garante que a imagem não distorça as dimensões do card */
+.card-img-top {
+  width: 100%;
+  height: 200px; /* Defina uma altura fixa para todas as imagens */
+  object-fit: cover; /* Faz a imagem cobrir o espaço sem se distorcer */
+}
+
+/* Media query para telas com largura máxima de 768 pixels (tablets e alguns dispositivos móveis maiores) */
+@media (max-width: 768px) {
+    .cards-container {
+        margin-left: 0 !important; /* Remove a margem esquerda que era para a barra de navegação vertical e força essa propriedade. */
+        padding-bottom: 500px !important; /* Adiciona um preenchimento inferior para dar espaço à barra de navegação inferior (quando em modo mobile). */
+        width: 100% !important; /* Define a largura para 100% em telas menores e força essa propriedade. */
+        padding-left: 3px !important; /* Adiciona um pequeno preenchimento à esquerda. */
+        padding-right: 3px !important; /* Adiciona um pequeno preenchimento à direita. */
+    }
+
     footer {
         display: none; /* Oculta o rodapé em telas menores ou iguais a 768 pixels. */
     }
 }
 
+/* Estilos para elementos com o ID "titulos" */
+#titulos {
+    margin-top: 20px; /* Adiciona uma margem superior de 20 pixels, afastando o título de elementos acima. */
+    font-family: 'Poppins', sans-serif; /* Define a fonte para 'Poppins' e, se não estiver disponível, usa uma fonte sans-serif genérica. */
+    font-weight: 700; /* Define a espessura da fonte como negrito. */
+    font-size: 26px; /* Define o tamanho da fonte para 26 pixels. */
+    color: black; /* Define a cor do texto como preto. */
+}
+
+/* Estilos para o rodapé */
 footer {
-   
-    background: linear-gradient(to right, rgb(255, 251, 43)20%, rgb(255, 255, 255) 50%); /* Define um gradiente horizontal para o fundo, começando em amarelo e indo para branco na metade. */
+    background: linear-gradient(to right, rgb(255, 251, 43)20%, rgb(255, 255, 255) 50%);
+    /* Define um gradiente horizontal para o fundo, começando em amarelo e indo para branco na metade. */
     color: black; /* Define a cor do texto como preto. */
     padding: 10px; /* Adiciona um preenchimento de 10 pixels em todos os lados. */
     text-align: center; /* Centraliza o texto dentro do rodapé. */
