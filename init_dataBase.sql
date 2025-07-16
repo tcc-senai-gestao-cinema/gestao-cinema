@@ -36,31 +36,46 @@ CREATE TABLE IF NOT EXISTS filmes (
     imagem_url VARCHAR(255)
 );
 
--- Cria a tabela 'salas' para gerenciar os locais de exibição dos filmes:
-CREATE TABLE IF NOT EXISTS salas (
-    id_sala INT AUTO_INCREMENT PRIMARY KEY,
+-- Cria a tabela 'local_de_exibicao' para gerenciar os locais de exibição
+CREATE TABLE IF NOT EXISTS locais_de_exibicao (
+    id_local_de_exibicao INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50),
     capacidade INT,
     tipo ENUM('2D', '3D', 'VIP (programa_fidelidade)')
 );
 
--- Cria a tabela 'assentos' vinculados a cada sala de exibição dos filmes
+-- Cria a tabela 'assentos' vinculados a cada local de exibição
 CREATE TABLE IF NOT EXISTS assentos (
     id_assento INT AUTO_INCREMENT PRIMARY KEY,
-    id_sala INT,
-    status ENUM('disponível', 'reservado', 'ocupado'),
-    FOREIGN KEY (id_sala) REFERENCES salas(id_sala)
+    id_local_de_exibicao INT,
+    tipo ENUM('normal', 'vip', 'cadeira de rodas', 'preferencial') NOT NULL,
+    status ENUM('disponível', 'reservado', 'ocupado') DEFAULT 'disponível',
+    reserva_data DATETIME,
+    FOREIGN KEY (id_local_de_exibicao) REFERENCES locais_de_exibicao(id_local_de_exibicao),
 );
+
+-- Cria a tabela 'areas_do_publico' vinculados a cada local de exibição
+CREATE TABLE IF NOT EXISTS areas_do_publico (
+    id_area_do_publico INT AUTO_INCREMENT PRIMARY KEY,
+    id_local_de_exibicao INT,
+    nome_area VARCHAR(100), -- (ex: Caideras não reservadas, Área VIP, Open Food, Pista, etc)
+    descricao TEXT,
+    lotacao INT,
+    lotacao_atual INT DEFAULT 0,
+    status ENUM('disponível', 'lotado', 'em andamento') DEFAULT 'disponível',
+    FOREIGN KEY (id_local_de_exibicao) REFERENCES locais_de_exibicao(id_local_de_exibicao)
+);
+
 
 -- Cria a tabela 'sessoes' que serão disponíveis para exibição dos filmes
 CREATE TABLE IF NOT EXISTS sessoes (
     id_sessao INT AUTO_INCREMENT PRIMARY KEY,
     id_filme INT,
-    id_sala INT,
+    id_local_de_exibicao INT,
     data DATE,
     horario TIME,
     FOREIGN KEY (id_filme) REFERENCES filmes(id_filme),
-    FOREIGN KEY (id_sala) REFERENCES salas(id_sala)
+    FOREIGN KEY (id_local_de_exibicao) REFERENCES locais_de_exibicao(id_local_de_exibicao)
 );
 
 -- Cria a tabela 'ingressos' para vendidos ou reservados
@@ -164,7 +179,7 @@ CREATE TABLE IF NOT EXISTS itens (
 CREATE TABLE IF NOT EXISTS avaliacoes (
     id_avaliacao INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
-    tipo ENUM('preço', 'filme', 'sala', 'produto', 'atendimento', 'limpeza', 'sistema'),
+    tipo ENUM('preço', 'filme', 'ambiente', 'produto', 'atendimento', 'limpeza', 'sistema'),
     rating INT CHECK (rating BETWEEN 1 AND 5),
     comentario TEXT,
     data_avaliacao DATETIME,
@@ -244,8 +259,6 @@ INSERT INTO produtos_diversos (nome, descricao, preco, imagem_url, estoque) VALU
 ('Pipoca Grande', 'Pipoca salgada feita na hora.', 15.00, 'http://localhost:3000/img/home/image6.png', 100),
 ('Refrigerante 500ml', 'Coca-Cola, Guaraná ou Fanta.', 8.00, 'http://localhost:3000/img/home/image6.png', 200),
 ('Combo Casal', '2 Pipocas Médias + 2 Refrigerantes 500ml.', 40.00, 'http://localhost:3000/img/home/image6.png', 50);
-
-
 
 -- (Opcional) Remove o usuário do MySQL chamado 'admin' que se conecta localmente, se ele já existir (isso evita erros ao tentar criar um usuário que já existe).
 -- DROP USER IF EXISTS 'admin'@'localhost';
