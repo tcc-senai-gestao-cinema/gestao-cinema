@@ -39,16 +39,16 @@ CREATE TABLE IF NOT EXISTS filmes (
 -- Cria a tabela 'local_de_exibicao' para gerenciar os locais de exibição
 CREATE TABLE IF NOT EXISTS locais_de_exibicao (
     id_local_de_exibicao INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(50),
+    nome VARCHAR(50),  -- (ex: Nome da sala, coliseu, teatro, explanada)
     capacidade INT,
     tipo ENUM('2D', '3D', 'VIP (programa_fidelidade)')
 );
 
--- Cria a tabela 'assentos' vinculados a cada local de exibição
-CREATE TABLE IF NOT EXISTS assentos (
-    id_assento INT AUTO_INCREMENT PRIMARY KEY,
+-- Cria a tabela 'vagas' vinculados a cada local de exibição
+CREATE TABLE IF NOT EXISTS vagas (
+    id_vaga INT AUTO_INCREMENT PRIMARY KEY,
     id_local_de_exibicao INT,
-    tipo ENUM('normal', 'vip', 'cadeira de rodas', 'preferencial') NOT NULL,
+    tipo ENUM('normal', 'casal', 'cadeira de rodas', 'preferencial', 'veiculo_pequeno', 'veiculo_medio', 'veiculo_grande') NOT NULL,
     status ENUM('disponível', 'reservado', 'ocupado') DEFAULT 'disponível',
     reserva_data DATETIME,
     FOREIGN KEY (id_local_de_exibicao) REFERENCES locais_de_exibicao(id_local_de_exibicao),
@@ -82,11 +82,11 @@ CREATE TABLE IF NOT EXISTS sessoes (
 CREATE TABLE IF NOT EXISTS ingressos (
     id_ingresso INT AUTO_INCREMENT PRIMARY KEY,
     id_sessao INT,
-    id_assento INT,
+    id_vaga INT,
     preco DECIMAL(10, 2),
     status ENUM('comprado', 'reservado', 'cancelado'),
     FOREIGN KEY (id_sessao) REFERENCES sessoes(id_sessao),
-    FOREIGN KEY (id_assento) REFERENCES assentos(id_assento)
+    FOREIGN KEY (id_vaga) REFERENCES vagas(id_vaga)
 );
 
 -- Cria a tabela 'reservas' para compras online
@@ -201,13 +201,13 @@ CREATE TABLE IF NOT EXISTS anuncios (
     CHECK (data_inicio <= data_fim)
 );
 
--- Relação N:N entre reservas e assentos
-CREATE TABLE IF NOT EXISTS reserva_assento (
+-- Relação N:N entre reservas e vagas
+CREATE TABLE IF NOT EXISTS reserva_vaga (
     id_reserva INT,
-    id_assento INT,
-    PRIMARY KEY (id_reserva, id_assento),
+    id_vaga INT,
+    PRIMARY KEY (id_reserva, id_vaga),
     FOREIGN KEY (id_reserva) REFERENCES reservas(id_reserva),
-    FOREIGN KEY (id_assento) REFERENCES assentos(id_assento)
+    FOREIGN KEY (id_vaga) REFERENCES vagas(id_vaga)
 );
 
 -- Relação N:N entre programas de fidelidade e promoções

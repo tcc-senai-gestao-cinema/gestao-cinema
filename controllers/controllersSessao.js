@@ -1,6 +1,6 @@
 
 // controllers/sessaoController.js
-const Sessao = require('../models/Sessoes'); 
+const Sessao = require('../models/Sessao'); 
 
 
 exports.getSessoesPorFilme = async (req, res) => {
