@@ -31,7 +31,7 @@ async function cadastro(req, res) {
       return showCadastroForm(req, res, 'E-mail inválido');
     }
 
-    const existingEmail = await findByEmail(e_mail);
+    const existingEmail = await Usuario.findByEmail(e_mail);
     if (existingEmail) {
       return showCadastroForm(req, res, 'E-mail já cadastrado');
     }
