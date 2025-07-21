@@ -5,8 +5,6 @@ const { Usuario } = require('../models/Usuario');
 
 // Exibe o formulário de edição com dados da sessão
 function showEditarPerfilForm(req, res) {
-  const usuario = req.session.usuario;
-
   const filePath = path.join(__dirname, '../pages/editar/editar-perfil.html');
 
   fs.readFile(filePath, 'utf8', (err, html) => {

@@ -9,7 +9,7 @@ const Usuario = dataBase.define('Usuario', {
     allowNull: false,
   },
   data_cadastro: {
-    type: DataTypes.DATEONLY,
+    type: DataTypes.DATEONLY, // DATEONLY para armazenar apenas a data
     allowNull: false,
   },
   nome: {
@@ -34,7 +34,7 @@ const Usuario = dataBase.define('Usuario', {
     type: DataTypes.STRING(20),
     allowNull: true,
   },
-  ativo: {
+  ativo: { // ativo: Se o usuário está ativo ou não (1 ou 0)
     type: DataTypes.TINYINT(1),
     allowNull: false,
     defaultValue: 1,
