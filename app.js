@@ -22,7 +22,7 @@ require('./routes/indexRoutes')(app);
 // ================= SOCKET.IO ===================
 
 // Carrega e inicializa o socket principal da aplicação (eventos em tempo real)
-const mainSocket = require('./sockets/mainSocket');
+const mainSocket = require('./sockets/indexSocket');
 mainSocket(io);
 
 // ================= SERVIDOR ====================
@@ -39,7 +39,9 @@ Para clonar no GIT:
 
 Dependências utilizadas no projeto:
 Instalados:
+> npm install ...
 - express          # Framework para servidor Web
+- express-session
 - sequelize        # ORM para banco de dados
 - mysql2           # Driver para conectar com MySQL
 - socket.io        # Comunicação em tempo real com WebSockets
@@ -48,7 +50,7 @@ Serão instalados:
 
 Comandos para instalar as dependências do zero:
 > npm init -y
-> npm install express sequelize mysql2 socket.io moment
+> npm install express express-session sequelize mysql2 socket.io
 
 Comando para instalar todas as dependências  de uma vez:
 > npm install

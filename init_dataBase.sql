@@ -42,13 +42,22 @@ CREATE TABLE IF NOT EXISTS locais_de_exibicoes (
     id_local_de_exibicao INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50),  -- (ex: Nome da sala, coliseu, teatro, explanada)
     capacidade INT,
-    tipo ENUM('aberto', 'fechado')
+    tipo ENUM('aberto', 'fechado'),
+    -- Formato geral da disposição do público
+    formato ENUM('arena', 'meia_lua', 'enfileirado', 'personalizado') DEFAULT 'enfileirado',
+    -- Quantidade de andares / níveis
+    quantidade_andares INT DEFAULT 1,
+    -- Fileiras simples
+    quantidade_fileiras INT,
+    -- Corredores gerais
+    quantidade_corredores INT DEFAULT 0
 );
 
 -- Cria a tabela 'vagas' vinculados a cada local de exibição
 CREATE TABLE IF NOT EXISTS vagas (
     id_vaga INT AUTO_INCREMENT PRIMARY KEY,
     id_local_de_exibicao INT,
+    nome VARCHAR(50),  -- (ex: Poltrona A1 ou região com Open Food)
     tipo ENUM('normal', 'casal', 'cadeira de rodas', 'preferencial', 'veiculo_pequeno', 'veiculo_medio', 'veiculo_grande') NOT NULL,
     status ENUM('disponível', 'reservado', 'ocupado') DEFAULT 'disponível',
     reserva_data DATETIME,
@@ -229,40 +238,8 @@ CREATE TABLE IF NOT EXISTS anuncio_filme (
     FOREIGN KEY (id_filme) REFERENCES filmes(id_filme)
 );
 
-INSERT INTO filmes (titulo, genero, duracao, classificacao_indicativa, sinopse, imagem_url)
-VALUES 
-('Vingadores: Ultimato', 'Ação', 181, '14 anos', 'Após os eventos devastadores de Guerra Infinita, os Vingadores tentam desfazer o caos causado por Thanos.', 'http://localhost:3000/img/home/teste2.jpg'),
-('Divertida Mente 2', 'Animação', 100, 'Livre', 'Riley agora adolescente enfrenta novas emoções e desafios em sua mente em constante evolução.', 'http://localhost:3000/img/home/teste1.jpg');
-
-INSERT INTO anuncios 
-(titulo, descricao, imagem_url, data_inicio, data_fim, ativo, tipo, link_destino, prioridade) 
-VALUES
-('Imagem 1', 'Descrição da imagem 1', 'http://localhost:3000/img/home/image6.png', '2024-01-01', '2025-12-31', true, 'carrossel', 'http://localhost:3000/programacao?id=1', 1),
-('Imagem 2', 'Descrição da imagem 3', 'http://localhost:3000/img/home/teste2.jpg', '2024-01-01', '2025-12-31', true, 'carrossel', 'http://localhost:3000/programacao?id=1', 3),
-('Imagem 3', 'Descrição da imagem 4', 'http://localhost:3000/img/home/teste3.jpg', '2024-01-01', '2025-12-31', true, 'carrossel', 'http://localhost:3000/programacao?id=2', 2);
-
-INSERT INTO sessoes (id_filme, data, horario) VALUES
-(1, '2025-06-20', '19:30'),
-(1, '2025-06-21', '20:40'),
-(2, '2025-07-22', '09:30'),
-(2, '2025-05-10', '15:10'),
-(2, '2025-06-24', '00:10');
-
-INSERT INTO filmes (titulo, genero, duracao, classificacao_indicativa, sinopse, imagem_url)
-VALUES 
-('Vingadores: Ultimato', 'Ação', 181, '14 anos', 'Após os eventos devastadores de Guerra Infinita, os Vingadores tentam desfazer o caos causado por Thanos.', 'http://localhost:3000/img/home/teste2.jpg'),
-('Divertida Mente 2', 'Animação', 100, 'Livre', 'Riley agora adolescente enfrenta novas emoções e desafios em sua mente em constante evolução.', 'http://localhost:3000/img/home/teste1.jpg'),
-('Vingadores: Ultimato', 'Ação', 181, '14 anos', 'Após os eventos devastadores de Guerra Infinita, os Vingadores tentam desfazer o caos causado por Thanos.', 'http://localhost:3000/img/home/teste2.jpg'),
-('Divertida Mente 2', 'Animação', 100, 'Livre', 'Riley agora adolescente enfrenta novas emoções e desafios em sua mente em constante evolução.', 'http://localhost:3000/img/home/teste1.jpg');
-
-
-INSERT INTO produtos_diversos (nome, descricao, preco, imagem_url, estoque) VALUES
-('Pipoca Grande', 'Pipoca salgada feita na hora.', 15.00, 'http://localhost:3000/img/home/image6.png', 100),
-('Refrigerante 500ml', 'Coca-Cola, Guaraná ou Fanta.', 8.00, 'http://localhost:3000/img/home/image6.png', 200),
-('Combo Casal', '2 Pipocas Médias + 2 Refrigerantes 500ml.', 40.00, 'http://localhost:3000/img/home/image6.png', 50);
-
 -- (Opcional) Remove o usuário do MySQL chamado 'admin' que se conecta localmente, se ele já existir (isso evita erros ao tentar criar um usuário que já existe).
--- DROP USER IF EXISTS 'admin'@'localhost';
+DROP USER IF EXISTS 'admin'@'localhost';
 
 -- Cria o usuário do MySQL chamado 'admin' que se conecta a partir do localhost, com a senha '1234567' (esse usuário será usado pela aplicação Node.js para se conectar ao banco de dados).
 CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY '1234567';
@@ -272,3 +249,34 @@ GRANT ALL PRIVILEGES ON cinema.* TO 'admin'@'localhost';
 
 -- Aplica imediatamente todas as mudanças de permissões feitas com o comando GRANT.
 FLUSH PRIVILEGES;
+
+INSERT INTO filmes (titulo, genero, duracao, classificacao_indicativa, sinopse, imagem_url) VALUES
+('Vingadores: Ultimato', 'Ação', 181, '14 anos', 'Após os eventos devastadores de Guerra Infinita, os Vingadores tentam desfazer o caos causado por Thanos.', 'http://localhost:3000/img/home/teste2.jpg'),
+('Divertida Mente 2', 'Animação', 100, 'Livre', 'Riley agora adolescente enfrenta novas emoções e desafios em sua mente em constante evolução.', 'http://localhost:3000/img/home/teste1.jpg'),
+('Vingadores: Ultimato', 'Ação', 181, '14 anos', 'Após os eventos devastadores de Guerra Infinita, os Vingadores tentam desfazer o caos causado por Thanos.', 'http://localhost:3000/img/home/teste2.jpg'),
+('Divertida Mente 2', 'Animação', 100, 'Livre', 'Riley agora adolescente enfrenta novas emoções e desafios em sua mente em constante evolução.', 'http://localhost:3000/img/home/teste1.jpg');
+
+INSERT INTO locais_de_exibicoes (nome, capacidade, tipo) VALUES
+('Sala Coliseu', 200, 'fechado'),
+('Sala Auditório', 300, 'aberto');
+
+-- Criar assentos para cada sala
+INSERT INTO vagas (id_local_de_exibicao, tipo, status) 
+VALUES (1, 'normal', 'ocupado');
+
+-- Exemplo para id_filme = 1, id_local_de_exibicao = 1 e 2
+INSERT INTO sessoes (id_filme, id_local_de_exibicao, data, horario) VALUES
+(1, 1, '2025-07-20', '19:00'),
+(2, 2, '2025-07-21', '21:30');
+
+-- PRODUTOS
+INSERT INTO produtos_diversos (nome, categoria, preco, descricao, imagem_url, estoque, estoque_minimo) VALUES
+('Pipoca Grande', 'Alimentos', 15.00, 'Pipoca salgada feita na hora.', 'http://localhost:3000/img/home/image6.png', 100, 10),
+('Refrigerante 500ml', 'Bebidas', 8.00, 'Coca-Cola, Guaraná ou Fanta.', 'http://localhost:3000/img/home/image6.png', 200, 20),
+('Combo Casal', 'Combo', 40.00, '2 Pipocas Médias + 2 Refrigerantes 500ml.', 'http://localhost:3000/img/home/image6.png', 50, 5);
+
+-- ANÚNCIOS
+INSERT INTO anuncios (titulo, descricao, imagem_url, data_inicio, data_fim, ativo, tipo, link_destino, prioridade) VALUES
+('Imagem 1', 'Descrição da imagem 1', 'http://localhost:3000/img/home/image6.png', '2024-01-01', '2025-12-31', true, 'carrossel', 'http://localhost:3000/programacao?id=1', 1),
+('Imagem 2', 'Descrição da imagem 3', 'http://localhost:3000/img/home/teste2.jpg', '2024-01-01', '2025-12-31', true, 'carrossel', 'http://localhost:3000/programacao?id=1', 3),
+('Imagem 3', 'Descrição da imagem 4', 'http://localhost:3000/img/home/teste3.jpg', '2024-01-01', '2025-12-31', true, 'carrossel', 'http://localhost:3000/programacao?id=2', 2);

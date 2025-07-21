@@ -1,15 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const { Usuario } = require('../models/Usuario');
-
 
 function showPerfil(req, res) {
-  const usuario = req.session.usuario;
-
-  if (!usuario) {
-    return res.redirect('/login');
-  }
-
   const filePath = path.join(__dirname, '../pages/perfil/perfil.html');
 
   fs.readFile(filePath, 'utf8', (err, html) => {
@@ -18,11 +10,11 @@ function showPerfil(req, res) {
     }
 
     const htmlFinal = html
-      .replace('%%NOME%%', usuario.nome || '')
-      .replace('%%CPF%%', usuario.cpf || '')
-      .replace('%%EMAIL%%', usuario.email || '')
-      .replace('%%TELEFONE%%', usuario.telefone || '');
-    
+      .replace(/%%NOME%%/g, usuario.nome || '')
+      .replace(/%%CPF%%/g, usuario.cpf || '')
+      .replace(/%%EMAIL%%/g, usuario.email || '')
+      .replace(/%%TELEFONE%%/g, usuario.telefone || '');
+      
     res.send(htmlFinal);
   });
 }

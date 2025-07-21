@@ -7,10 +7,6 @@ const { Usuario } = require('../models/Usuario');
 function showEditarPerfilForm(req, res) {
   const usuario = req.session.usuario;
 
-  if (!usuario) {
-    return res.redirect('/login');
-  }
-
   const filePath = path.join(__dirname, '../pages/editar/editar-perfil.html');
 
   fs.readFile(filePath, 'utf8', (err, html) => {
@@ -32,12 +28,6 @@ function showEditarPerfilForm(req, res) {
 // Atualiza os dados no banco
 async function editarPerfil(req, res) {
   try {
-    const usuarioSessao = req.session.usuario;
-
-    if (!usuarioSessao) {
-      return res.redirect('/login');
-    }
-
     const usuario = await Usuario.findByPk(usuarioSessao.id);
     if (!usuario) {
       return showEditarPerfilForm(req, res, 'Usuário não encontrado');

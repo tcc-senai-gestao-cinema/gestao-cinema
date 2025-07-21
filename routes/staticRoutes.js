@@ -1,6 +1,7 @@
 // Importa o Express e o módulo 'path'
 const express = require('express');
 const path = require('path');
+const { verificarLogin } = require('../middlewares/verificarLogin');
 
 // Cria um novo roteador do Express
 const router = express.Router();
@@ -23,7 +24,7 @@ router.get('/fidelidade', (req, res) => {
 });
 
 // Página com explicações sobre pontos e regras
-router.get('/pontoERegra', (req, res) => {
+router.get('/ponto-e-regra', (req, res) => {
     res.sendFile(path.join(__dirname, '../pages/pontoERegra/pontoERegra.html'));
 });
 
@@ -33,8 +34,29 @@ router.get('/lojinha', (req, res) => {
 });
 
 // Página da lojinha
-router.get('/distribuicaoDoPublico', (req, res) => {
+router.get('/distribuicao-do-publico', (req, res) => {
     res.sendFile(path.join(__dirname, '../pages/distribuicaoDoPublico/distribuicaoDoPublico.html'));
+});
+
+// Página de editar perfil do usuário
+router.get('/perfil', verificarLogin, (req, res) => {
+    res.sendFile(path.join(__dirname, '../pages/perfil/perfil.html'));
+});
+
+// Página de editar perfil do usuário
+router.get('/editar-perfil', verificarLogin, (req, res) => {
+    res.sendFile(path.join(__dirname, '../pages/perfil/editarPerfil.html'));
+});
+
+// routes/indexRoutes.js
+router.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.error('Erro ao deslogar:', err);
+            return res.redirect('/perfil');
+        }
+        res.redirect('/login');
+    });
 });
 
 // Exporta o roteador

@@ -62,8 +62,8 @@
   ); /* Muda a cor de fundo para branco ao passar o mouse. */
 }
 
-/* Estilos específicos para o botão com o ID "botaoMeio" */
-#botaoMeio {
+/* Estilos específicos para o botão com o ID "botaoMaior" */
+#botaoMaior {
   width: 60px; /* Define a largura do botão para 60 pixels. */
   height: 60px; /* Define a altura do botão para 60 pixels, mantendo-o redondo. */
 }

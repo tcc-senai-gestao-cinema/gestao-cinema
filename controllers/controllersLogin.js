@@ -5,6 +5,12 @@ const bcrypt = require('bcryptjs');
 
 // Exibir formulário de login
 function showLoginForm(req, res, mensagem = '') {
+  const usuario = req.session.usuario;
+
+  if (usuario) {
+    return res.redirect('/perfil');
+  }
+  
   const caminho = path.join(__dirname, '../pages/login/login.html');
 
   fs.readFile(caminho, 'utf8', (err, html) => {
@@ -50,7 +56,7 @@ async function login(req, res) {
       telefone: user.telefone,
     };
 
-    res.redirect('/home');
+    res.redirect('/');
 
   } catch (error) {
     console.error('Erro ao fazer login:', error);
