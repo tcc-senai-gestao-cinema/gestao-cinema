@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 // Criação da instância Sequelize com a URL de conexão
-const dataBase = new Sequelize('cinema', 'admin', '1234567', {
+const dataBase = new Sequelize('testecinema', 'root', '', {
   host: 'localhost',
   port: 3306,
   dialect: 'mysql', // Funciona para MariaDB também

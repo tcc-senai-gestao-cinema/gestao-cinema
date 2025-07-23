@@ -16,7 +16,7 @@ const Sessao = dataBase.define('Sessao', {
       key: 'id_filme'
     }
   },
-  id_sala: {
+  id_local_de_exibicao: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {

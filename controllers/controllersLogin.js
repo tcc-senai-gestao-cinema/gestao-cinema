@@ -24,7 +24,7 @@ function showLoginForm(req, res, mensagem = '') {
 }
 
 // Lógica de login
-async function login(req, res) {
+async function login(req, res, next) {
   try {
     const { e_mail, senha } = req.body;
 
@@ -38,6 +38,13 @@ async function login(req, res) {
     }
 
     const validPassword = await bcrypt.compare(senha, user.senha_hash);
+
+    console.log('1. USUÁRIO ENCONTRADO NO BANCO:', user);
+
+    if (!user) {
+      return showLoginForm(req, res, 'Email ou senha inválidos');
+    }
+
     if (!validPassword) {
       return showLoginForm(req, res, 'Email ou senha inválidos');
     }
@@ -47,14 +54,15 @@ async function login(req, res) {
       { where: { id_usuario: user.id_usuario } }
     );
 
-    // Salva os dados na sessão
-    req.session.usuario = {
-      id: user.id_usuario,
-      nome: user.nome,
-      cpf: user.cpf,
-      email: user.e_mail,
-      telefone: user.telefone,
-    };
+req.session.usuario = {
+  id: user.id_usuario,
+  nome: user.nome,
+  cpf: user.cpf,
+  email: user.e_mail,
+  telefone: user.telefone,
+};
+
+console.log('DADOS SALVOS NA SESSÃO:', req.session.usuario); // Certo aqui!
 
     res.redirect('/');
 

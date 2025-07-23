@@ -280,3 +280,11 @@ INSERT INTO anuncios (titulo, descricao, imagem_url, data_inicio, data_fim, ativ
 ('Imagem 1', 'Descrição da imagem 1', 'http://localhost:3000/img/home/image6.png', '2024-01-01', '2025-12-31', true, 'carrossel', 'http://localhost:3000/programacao?id=1', 1),
 ('Imagem 2', 'Descrição da imagem 3', 'http://localhost:3000/img/home/teste2.jpg', '2024-01-01', '2025-12-31', true, 'carrossel', 'http://localhost:3000/programacao?id=1', 3),
 ('Imagem 3', 'Descrição da imagem 4', 'http://localhost:3000/img/home/teste3.jpg', '2024-01-01', '2025-12-31', true, 'carrossel', 'http://localhost:3000/programacao?id=2', 2);
+
+INSERT INTO promocoes 
+(id_programa_fidelidade, nome, descricao, desconto_percentual, data_inicio, data_fim, tipo, imagem_url) 
+VALUES 
+(NULL, 'Combo Casal Perfeito', '1 Pipoca Grande Salgada + 2 Refrigerantes de 500ml por um preço imperdível. Válido para qualquer sessão!', NULL, '2025-07-01', '2025-08-31', 'comum', 'http://localhost:3000/img/home/teste.jpg'),
+(NULL, 'Quarta-Feira com 50% OFF', 'Toda quarta, seu segundo ingresso para a mesma sessão sai pela metade do preço. Chame um amigo!', 50.00, '2025-07-01', '2025-12-31', 'comum', 'http://localhost:3000/img/home/teste1.jpg'),
+(NULL, 'Combo Casal Perfeito', '1 Pipoca Grande Salgada + 2 Refrigerantes de 500ml por um preço imperdível. Válido para qualquer sessão!', NULL, '2025-07-01', '2025-08-31', 'comum', 'http://localhost:3000/img/home/teste2.jpg'),
+(NULL, 'Quarta-Feira com 80% OFF', 'Toda quarta, seu segundo ingresso para a mesma sessão sai pela metade do preço. Chame um amigo!', 80.00, '2025-07-01', '2025-12-31', 'comum', 'http://localhost:3000/img/home/Mega2.0.svg');

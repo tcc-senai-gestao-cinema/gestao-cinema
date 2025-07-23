@@ -5,7 +5,8 @@ const loginController = require('../controllers/controllersLogin');
 const perfilController = require('../controllers/controllersPerfil');
 
 // rota protegida
-router.get('/perfil', verificarLogin, perfilController.showPerfil);
+router.get('/perfil', verificarLogin, perfilController.showProfile);
+
 
 // rota pública
 router.get('/login', loginController.showLoginForm);

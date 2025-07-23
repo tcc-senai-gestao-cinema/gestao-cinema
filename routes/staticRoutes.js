@@ -38,15 +38,6 @@ router.get('/distribuicao-do-publico', (req, res) => {
     res.sendFile(path.join(__dirname, '../pages/distribuicaoDoPublico/distribuicaoDoPublico.html'));
 });
 
-// Página de editar perfil do usuário
-router.get('/perfil', verificarLogin, (req, res) => {
-    res.sendFile(path.join(__dirname, '../pages/perfil/perfil.html'));
-});
-
-// Página de editar perfil do usuário
-router.get('/editar-perfil', verificarLogin, (req, res) => {
-    res.sendFile(path.join(__dirname, '../pages/perfil/editarPerfil.html'));
-});
 
 // routes/indexRoutes.js
 router.get('/logout', (req, res) => {
