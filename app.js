@@ -12,12 +12,12 @@ const PORT = 3000; // Define a porta que o site irá operar
 // ================= MIDDLEWARES =================
 
 // Middlewares globais para o Express (como body parser e arquivos estáticos)
-require('./middlewares/indexMiddlewares')(app);
+require('./middlewares/indexMiddleware')(app);
 
 // ================= ROTAS =======================
 
 // Importa e registra todas as rotas disponíveis (HTML + API REST)
-require('./routes/indexRoutes')(app);
+require('./routes/indexRoute')(app);
 
 // ================= SOCKET.IO ===================
 

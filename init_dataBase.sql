@@ -25,43 +25,16 @@ CREATE TABLE IF NOT EXISTS usuarios (
     tipo_acesso ENUM('cliente', 'atendente', 'admin')
 );
 
--- Cria a tabela 'filmes' contendo informações dos filmes em cartaz
-CREATE TABLE IF NOT EXISTS filmes (
-    id_filme INT AUTO_INCREMENT PRIMARY KEY,
-    titulo VARCHAR(255),
-    genero VARCHAR(100),
-    duracao INT,
-    classificacao_indicativa VARCHAR(50),
-    sinopse TEXT,
-    imagem_url VARCHAR(255),
-    tipo ENUM('2D', '3D')
-);
-
 -- Cria a tabela 'local_de_exibicao' para gerenciar os locais de exibição
 CREATE TABLE IF NOT EXISTS locais_de_exibicoes (
     id_local_de_exibicao INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50),  -- (ex: Nome da sala, coliseu, teatro, explanada)
     capacidade INT,
     tipo ENUM('aberto', 'fechado'),
-    -- Formato geral da disposição do público
-    formato ENUM('arena', 'meia_lua', 'enfileirado', 'personalizado') DEFAULT 'enfileirado',
-    -- Quantidade de andares / níveis
-    quantidade_andares INT DEFAULT 1,
-    -- Fileiras simples
-    quantidade_fileiras INT,
-    -- Corredores gerais
-    quantidade_corredores INT DEFAULT 0
-);
-
--- Cria a tabela 'vagas' vinculados a cada local de exibição
-CREATE TABLE IF NOT EXISTS vagas (
-    id_vaga INT AUTO_INCREMENT PRIMARY KEY,
-    id_local_de_exibicao INT,
-    nome VARCHAR(50),  -- (ex: Poltrona A1 ou região com Open Food)
-    tipo ENUM('normal', 'casal', 'cadeira de rodas', 'preferencial', 'veiculo_pequeno', 'veiculo_medio', 'veiculo_grande') NOT NULL,
-    status ENUM('disponível', 'reservado', 'ocupado') DEFAULT 'disponível',
-    reserva_data DATETIME,
-    FOREIGN KEY (id_local_de_exibicao) REFERENCES locais_de_exibicoes(id_local_de_exibicao)
+    formato ENUM('enfileirado', 'personalizado') DEFAULT 'enfileirado', -- Formato geral da disposição do público enfileirado, redondo, meia-lua, quadrado, metade-quadrado, fileiras-laterais |-|
+    quantidade_andares INT DEFAULT 1, -- Quantidade de andares / níveis
+    quantidade_fileiras INT, -- Fileiras simples
+    quantidade_corredores INT DEFAULT 0 -- Corredores gerais
 );
 
 -- Cria a tabela 'areas_do_publico' vinculados a cada local de exibição
@@ -76,14 +49,45 @@ CREATE TABLE IF NOT EXISTS areas_do_publico (
     FOREIGN KEY (id_local_de_exibicao) REFERENCES locais_de_exibicoes(id_local_de_exibicao)
 );
 
+-- Cria a tabela 'vagas' vinculados a cada local de exibição
+CREATE TABLE IF NOT EXISTS vagas (
+    id_vaga INT AUTO_INCREMENT PRIMARY KEY,
+    id_local_de_exibicao INT,
+    nome VARCHAR(50),  -- (Ex: A1, B2, Vaga 12)
+    categoria ENUM('assento', 'drive_in') NOT NULL,  -- Define o tipo geral
+    tipo ENUM(
+        'normal', 'casal', 'acessivel', 'preferencial',  -- Para assentos
+        'veiculo_pequeno', 'veiculo_medio', 'veiculo_grande' -- Para drive-in
+    ) NOT NULL,
+    status ENUM('disponível', 'reservado', 'ocupado') DEFAULT 'disponível',
+    reserva_data DATETIME,
+    pos_x INT,
+    pos_y INT,
+    andar INT DEFAULT 1,
+    FOREIGN KEY (id_local_de_exibicao) REFERENCES locais_de_exibicoes(id_local_de_exibicao),
+    UNIQUE (id_local_de_exibicao, nome)
+);
 
--- Cria a tabela 'sessoes' que serão disponíveis para exibição dos filmes
-CREATE TABLE IF NOT EXISTS sessoes (
-    id_sessao INT AUTO_INCREMENT PRIMARY KEY,
+-- Cria a tabela 'filmes' contendo informações dos filmes em cartaz
+CREATE TABLE IF NOT EXISTS filmes (
+    id_filme INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255),
+    genero VARCHAR(100),
+    duracao INT,
+    classificacao_indicativa VARCHAR(50),
+    sinopse TEXT,
+    imagem_url VARCHAR(255),
+    tipo ENUM('2D', '3D')
+);
+
+-- Cria a tabela 'programacoes' que serão disponíveis para exibição dos filmes
+CREATE TABLE IF NOT EXISTS programacoes (
+    id_programacao INT AUTO_INCREMENT PRIMARY KEY,
     id_filme INT,
     id_local_de_exibicao INT,
     data DATE,
     horario TIME,
+    titulo_personalizado VARCHAR(255),
     FOREIGN KEY (id_filme) REFERENCES filmes(id_filme),
     FOREIGN KEY (id_local_de_exibicao) REFERENCES locais_de_exibicoes(id_local_de_exibicao)
 );
@@ -91,11 +95,11 @@ CREATE TABLE IF NOT EXISTS sessoes (
 -- Cria a tabela 'ingressos' para vendidos ou reservados
 CREATE TABLE IF NOT EXISTS ingressos (
     id_ingresso INT AUTO_INCREMENT PRIMARY KEY,
-    id_sessao INT,
+    id_programacao INT,
     id_vaga INT,
     preco DECIMAL(10, 2),
     status ENUM('comprado', 'reservado', 'cancelado'),
-    FOREIGN KEY (id_sessao) REFERENCES sessoes(id_sessao),
+    FOREIGN KEY (id_programacao) REFERENCES programacoes(id_programacao),
     FOREIGN KEY (id_vaga) REFERENCES vagas(id_vaga)
 );
 
@@ -107,7 +111,7 @@ CREATE TABLE IF NOT EXISTS reservas (
     horario_reserva TIME,
     validade_reserva DATETIME,
     status ENUM('reservado', 'confirmado', 'cancelado'),
-    origem ENUM('online'),
+    origem ENUM('presencial', 'online', 'app', 'totem', 'externo'),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 
@@ -189,7 +193,7 @@ CREATE TABLE IF NOT EXISTS itens (
 CREATE TABLE IF NOT EXISTS avaliacoes (
     id_avaliacao INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
-    tipo ENUM('preço', 'filme', 'ambiente', 'produto', 'atendimento', 'limpeza', 'sistema'),
+    tipo ENUM('preço', 'conteudo_exibido', 'ambiente', 'produto', 'atendimento', 'limpeza', 'estrutura', 'sistema'),
     rating INT CHECK (rating BETWEEN 1 AND 5),
     comentario TEXT,
     data_avaliacao DATETIME,
@@ -265,7 +269,7 @@ INSERT INTO vagas (id_local_de_exibicao, tipo, status)
 VALUES (1, 'normal', 'ocupado');
 
 -- Exemplo para id_filme = 1, id_local_de_exibicao = 1 e 2
-INSERT INTO sessoes (id_filme, id_local_de_exibicao, data, horario) VALUES
+INSERT INTO programacoes (id_filme, id_local_de_exibicao, data, horario) VALUES
 (1, 1, '2025-07-20', '19:00'),
 (2, 2, '2025-07-21', '21:30');
 
@@ -288,3 +292,12 @@ VALUES
 (NULL, 'Quarta-Feira com 50% OFF', 'Toda quarta, seu segundo ingresso para a mesma sessão sai pela metade do preço. Chame um amigo!', 50.00, '2025-07-01', '2025-12-31', 'comum', 'http://localhost:3000/img/home/teste1.jpg'),
 (NULL, 'Combo Casal Perfeito', '1 Pipoca Grande Salgada + 2 Refrigerantes de 500ml por um preço imperdível. Válido para qualquer sessão!', NULL, '2025-07-01', '2025-08-31', 'comum', 'http://localhost:3000/img/home/teste2.jpg'),
 (NULL, 'Quarta-Feira com 80% OFF', 'Toda quarta, seu segundo ingresso para a mesma sessão sai pela metade do preço. Chame um amigo!', 80.00, '2025-07-01', '2025-12-31', 'comum', 'http://localhost:3000/img/home/Mega2.0.svg');
+
+INSERT INTO vagas (id_local_de_exibicao, nome, categoria, tipo, status, pos_x, pos_y)
+VALUES
+(1, 'A1', 'assento', 'normal', 'disponível', 1, 1),
+(1, 'A2', 'assento', 'normal', 'disponível', 2, 1),
+(1, 'A3', 'assento', 'normal', 'disponível', 3, 1),
+(1, 'B1', 'assento', 'normal', 'disponível', 1, 2),
+(1, 'B2', 'assento', 'normal', 'disponível', 2, 2),
+(1, 'B3', 'assento', 'normal', 'disponível', 3, 2);

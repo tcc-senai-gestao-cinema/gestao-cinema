@@ -1,51 +1,25 @@
+// models/Vaga.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/dataBase');
-const LocalDeExibicao = require('./LocalDeExibicao');
+const sequelize = require('../config/dataBase'); // ajuste o caminho se necessário
 
 const Vaga = sequelize.define('Vaga', {
   id_vaga: {
     type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
-  id_local_de_exibicao: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: LocalDeExibicao,
-      key: 'id_local_de_exibicao'
-    },
-    onDelete: 'CASCADE'
-  },
-  tipo: {
-    type: DataTypes.ENUM(
-      'normal',
-      'casal',
-      'cadeira de rodas',
-      'preferencial',
-      'veiculo_pequeno',
-      'veiculo_medio',
-      'veiculo_grande'
-    ),
-    allowNull: false
-  },
-  status: {
-    type: DataTypes.ENUM('disponível', 'reservado', 'ocupado'),
-    defaultValue: 'disponível'
-  },
-  reserva_data: {
-    type: DataTypes.DATE,
-    allowNull: true
-  }
+  id_local_de_exibicao: DataTypes.INTEGER,
+  nome: DataTypes.STRING,
+  categoria: DataTypes.ENUM('assento', 'drive_in'),
+  tipo: DataTypes.ENUM('normal', 'casal', 'acessivel', 'preferencial', 'veiculo_pequeno', 'veiculo_medio', 'veiculo_grande'),
+  status: DataTypes.ENUM('disponível', 'reservado', 'ocupado'),
+  reserva_data: DataTypes.DATE,
+  pos_x: DataTypes.INTEGER,
+  pos_y: DataTypes.INTEGER,
+  andar: DataTypes.INTEGER
 }, {
   tableName: 'vagas',
   timestamps: false
-});
-
-// Relacionamento
-Vaga.belongsTo(LocalDeExibicao, {
-  foreignKey: 'id_local_de_exibicao',
-  as: 'local'
 });
 
 module.exports = Vaga;
