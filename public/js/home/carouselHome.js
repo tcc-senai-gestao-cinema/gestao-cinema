@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const socket = window.socket;
+  if (!socket) return;
 
   socket.on('anunciosCarrossel', (anuncios) => {
     const inner = document.querySelector('.carousel-inner');

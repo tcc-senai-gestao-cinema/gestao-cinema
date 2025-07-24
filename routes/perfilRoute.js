@@ -10,6 +10,4 @@ router.get('/perfil/editar', verificarLogin, perfilController.showEditForm);
 // NOVA ROTA: Para PROCESSAR o formulário de edição
 router.post('/perfil/editar', verificarLogin, perfilController.updateProfile);
 
-
-
 module.exports = router;
