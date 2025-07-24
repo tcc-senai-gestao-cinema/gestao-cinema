@@ -1,37 +1,59 @@
-// Importações principais
-const http = require('http'); // Módulo nativo para criar servidor HTTP
-const express = require('express'); // Framework para criar o servidor web
-const { Server } = require('socket.io'); // Biblioteca para comunicação em tempo real com WebSockets
+// Executa o .bat antes de iniciar o servidor
+const { exec } = require('child_process');
+const path = require('path');
 
-const app = express(); // Cria uma instância da aplicação Express
-const server = http.createServer(app); // Cria o servidor HTTP usando Express
-const io = new Server(server); // Conecta o socket.io ao servidor HTTP
+const batFile = path.join(__dirname, 'installDependencies.bat'); // Caminho para o .bat
 
-const PORT = 3000; // Define a porta que o site irá operar
+exec(`"${batFile}"`, (error, stdout, stderr) => {
+  if (error) {
+    console.error(`Erro ao executar installDependencies.bat: ${error.message}`);
+    return;
+  }
+  if (stderr) {
+    console.error(`Erro de execução: ${stderr}`);
+    return;
+  }
 
-// ================= MIDDLEWARES =================
-
-// Middlewares globais para o Express (como body parser e arquivos estáticos)
-require('./middlewares/indexMiddleware')(app);
-
-// ================= ROTAS =======================
-
-// Importa e registra todas as rotas disponíveis (HTML + API REST)
-require('./routes/indexRoute')(app);
-
-// ================= SOCKET.IO ===================
-
-// Carrega e inicializa o socket principal da aplicação (eventos em tempo real)
-const mainSocket = require('./sockets/indexSocket');
-mainSocket(io);
-
-// ================= SERVIDOR ====================
-
-// Inicializa o servidor e escuta na porta definida
-server.listen(PORT, '0.0.0.0', () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
-    console.log(`Servidor acessível na rede local: http://<seu-ip-local>:${PORT}`);
+  console.log(`Saída do installDependencies.bat:\n${stdout}`);
+  iniciarServidor(); // Só inicia o servidor após o .bat
 });
+
+function iniciarServidor() {
+    // Importações principais
+    const http = require('http'); // Módulo nativo para criar servidor HTTP
+    const express = require('express'); // Framework para criar o servidor web
+    const { Server } = require('socket.io'); // Biblioteca para comunicação em tempo real com WebSockets
+
+    const app = express(); // Cria uma instância da aplicação Express
+    const server = http.createServer(app); // Cria o servidor HTTP usando Express
+    const io = new Server(server); // Conecta o socket.io ao servidor HTTP
+
+    const PORT = 3000; // Define a porta que o site irá operar
+
+    // ================= MIDDLEWARES =================
+
+    // Middlewares globais para o Express (como body parser e arquivos estáticos)
+    require('./middlewares/indexMiddleware')(app);
+
+    // ================= ROTAS =======================
+
+    // Importa e registra todas as rotas disponíveis (HTML + API REST)
+    require('./routes/indexRoute')(app);
+
+    // ================= SOCKET.IO ===================
+
+    // Carrega e inicializa o socket principal da aplicação (eventos em tempo real)
+    const mainSocket = require('./sockets/indexSocket');
+    mainSocket(io);
+
+    // ================= SERVIDOR ====================
+
+    // Inicializa o servidor e escuta na porta definida
+    server.listen(PORT, '0.0.0.0', () => {
+        console.log(`Servidor rodando em http://localhost:${PORT}`);
+        console.log(`Servidor acessível na rede local: http://<seu-ip-local>:${PORT}`);
+    });
+}
 
 /* ============================ INFORMAÇÕES ÚTEIS ============================
 Para clonar no GIT:

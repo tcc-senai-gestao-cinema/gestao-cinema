@@ -1,4 +1,3 @@
-// models/Filme.js
 const { DataTypes } = require('sequelize');  // Corrigir a importação
 const dataBase = require('../config/dataBase');  // Importa a conexão com o banco de dados
 

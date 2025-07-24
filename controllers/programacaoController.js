@@ -3,18 +3,18 @@
 const programacao = require('../models/programacao'); 
 
 
-exports.getprogramacoesPorFilme = async (req, res) => {
+exports.getProgramacoesPorExibicao = async (req, res) => {
   const { id } = req.params;
   try {
     const programacoes = await programacao.findAll({
       where: { id_filme: id }
     });
 
-    console.log('Sessões encontradas:', programacoes); 
+    console.log('Programações encontradas:', programacoes); 
     res.json(programacoes);
     
   } catch (err) {
-    console.error('Erro ao buscar sessões:', err);
-    res.status(500).json({ erro: 'Erro ao buscar sessões.' });
+    console.error('Erro ao buscar programações:', err);
+    res.status(500).json({ erro: 'Erro ao buscar programações.' });
   }
 };

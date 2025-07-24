@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 
 // Página de Programação (escolha de filmes)
 router.get('/programacao', (req, res) => {
-    res.sendFile(path.join(__dirname, '../pages/escolhaFilme/escolhaFilme.html'));
+    res.sendFile(path.join(__dirname, '../pages/programacao/programacao.html'));
 });
 
 // Página do sistema de fidelidade

@@ -1,4 +1,3 @@
-// carregarprogramacoes.js
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const filmeId = params.get('id_filme');
@@ -69,6 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('input[name="dia"]:checked')?.dispatchEvent(new Event('change'));
     })
     .catch(err => {
-      console.error('Erro ao carregar sessões:', err);
+      console.error('Erro ao carregar programações:', err);
     });
 });
