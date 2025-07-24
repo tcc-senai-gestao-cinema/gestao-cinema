@@ -1,4 +1,3 @@
-// carregarSessoes.js
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const filmeId = params.get('id_filme');
@@ -8,13 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  fetch(`/api/sessoes/${filmeId}`)
+  fetch(`/api/programacoes/${filmeId}`)
     .then(res => res.json())
-    .then(sessoes => {
+    .then(programacoes => {
       const diasContainer = document.getElementById('dias-container');
       const horariosContainer = document.getElementById('horarios-container');
 
-      const diasUnicos = [...new Set(sessoes.map(s => s.data))];
+      const diasUnicos = [...new Set(programacoes.map(s => s.data))];
 
       diasUnicos.forEach((data, index) => {
         const inputId = `dia${index}`;
@@ -38,21 +37,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         input.addEventListener('change', () => {
           horariosContainer.innerHTML = '';
-          const horariosDoDia = sessoes.filter(s => s.data === data);
-          horariosDoDia.forEach((sessao, hIndex) => {
+          const horariosDoDia = programacoes.filter(s => s.data === data);
+          horariosDoDia.forEach((programacao, hIndex) => {
             const horarioId = `horario${hIndex}`;
             const inputH = document.createElement('input');
             inputH.type = 'radio';
             inputH.className = 'btn-check';
             inputH.name = 'horario';
             inputH.id = horarioId;
-            inputH.value = sessao.id_sessao;
+            inputH.value = programacao.id_programacao;
             inputH.autocomplete = 'off';
 
             const labelH = document.createElement('label');
             labelH.className = 'btn btn-custom m-1';
             labelH.htmlFor = horarioId;
-            labelH.textContent = sessao.horario.slice(0, 5);
+            labelH.textContent = programacao.horario.slice(0, 5);
 
             horariosContainer.appendChild(inputH);
             horariosContainer.appendChild(labelH);
@@ -69,6 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('input[name="dia"]:checked')?.dispatchEvent(new Event('change'));
     })
     .catch(err => {
-      console.error('Erro ao carregar sessões:', err);
+      console.error('Erro ao carregar programações:', err);
     });
 });
