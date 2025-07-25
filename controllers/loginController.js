@@ -41,7 +41,6 @@ async function login(req, res, next) {
     const validPassword = await bcrypt.compare(senha, user.senha_hash);
 
     console.log('USUÁRIO ENCONTRADO NO BANCO:', user);
-
     if (!user) {
       return showLoginForm(req, res, 'Email ou senha inválidos');
     }
