@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const socket = window.socket;
+  if (!socket) return;
 
   socket.on('filmes', (filmes) => {
     const container = document.getElementById('container-display-filmes');

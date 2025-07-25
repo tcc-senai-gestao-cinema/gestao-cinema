@@ -1,3 +1,4 @@
+// controllers/loginController.js
 const fs = require('fs');
 const path = require('path');
 const { Usuario, findByEmail } = require('../models/Usuario');
@@ -39,8 +40,7 @@ async function login(req, res, next) {
 
     const validPassword = await bcrypt.compare(senha, user.senha_hash);
 
-    console.log('1. USUÁRIO ENCONTRADO NO BANCO:', user);
-
+    console.log('USUÁRIO ENCONTRADO NO BANCO:', user);
     if (!user) {
       return showLoginForm(req, res, 'Email ou senha inválidos');
     }
@@ -54,15 +54,18 @@ async function login(req, res, next) {
       { where: { id_usuario: user.id_usuario } }
     );
 
-req.session.usuario = {
-  id: user.id_usuario,
-  nome: user.nome,
-  cpf: user.cpf,
-  email: user.e_mail,
-  telefone: user.telefone,
-};
+    req.session.usuario = {
+      id: user.id_usuario,
+      nome: user.nome,
+      cpf: user.cpf,
+      email: user.e_mail,
+      telefone: user.telefone,
+    };
 
-console.log('DADOS SALVOS NA SESSÃO:', req.session.usuario); // Certo aqui!
+    console.log('DADOS SALVOS NA SESSÃO:', req.session.usuario);
+
+    // Salvar a flag de que o usuário acabou de fazer login
+    req.session.loginRecente = true;
 
     res.redirect('/');
 

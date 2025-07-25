@@ -1,4 +1,4 @@
-// indexSocket.js
+// sockets/indexSocket.js
 const filmesHandler = require('./handlers/filmesHandler');
 const anunciosHandler = require('./handlers/anunciosHandler');
 const mensagemHandler = require('./handlers/mensagemHandler');
@@ -8,14 +8,29 @@ const promocaoHandler = require('./handlers/promocaoHandler');
 module.exports = (io) => {
   io.on('connection', (socket) => {
     // Identificador padrão
-    socket.identificador = socket.id;
+    socket.identificador = `anonimo:${socket.id}`;
+    socket.idUsuarioAutenticado = null;
     console.log('Usuário conectado com socket.id:', socket.identificador);
 
-    socket.on('autenticarUsuario', ({ idUsuario }) => {
+    socket.on('autenticarUsuario', ({ idUsuario, loginRecente }) => {
+      const identificadorAnterior = socket.identificador;
+      
       socket.identificador = `usuario:${idUsuario}`;
-      console.log('Usuário autenticado com ID do banco:', socket.identificador);
+      socket.idUsuarioAutenticado = idUsuario;
+      
+      console.log(`🔄 Usuário autenticado: ${identificadorAnterior} → ${socket.identificador}`);
+      
+      if (loginRecente) {
+        console.log('✅ Login recente detectado - usuário acabou de fazer login');
+        
+        // Re-enviar dados atualizados após o login
+        filmesHandler(socket);
+        anunciosHandler(socket);
+        promocaoHandler(socket);
+      }
     });
 
+    // Enviar dados iniciais para usuários anônimos
     filmesHandler(socket);
     anunciosHandler(socket);
     vagasHandler(io, socket);
