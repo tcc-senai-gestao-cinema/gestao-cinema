@@ -5,7 +5,7 @@
     width: 1100px;
     height: 50px;
     background-color: #000000;
-    margin: 0 auto; /* Centraliza horizontalmente */
+    margin: 0 auto;
     border-radius: 8px;
     color: white;
     display: flex;
@@ -22,218 +22,333 @@
 /* Grid para a seleção de assentos */
 .selecao-assentos {
     display: grid;
-    grid-template-columns: repeat(10, 50px); /* 10 cadeiras por linha */
     gap: 10px;
     justify-content: center;
-    margin-left: 60px; /* Define uma margem à esquerda de 80 pixels, provavelmente para dar espaço à barra lateral fixa. */
-    width: calc(100% - 90px); /* Define a largura do container como 100% menos 70 pixels (um pouco menor que a largura da sidebar, pode haver um ajuste). */
-    position: relative; /* Define a posição como relativa para que elementos internos possam ser posicionados relativamente a ele. */
-    padding-bottom: 20px; /* ou 120px se precisar de mais espaço */
+    margin-left: 60px;
+    width: calc(100% - 90px);
+    position: relative;
+    padding: 20px 0;
+    min-height: 400px;
 }
 
 /* Estilo para cada cadeira */
 .cadeira {
-        width: 12vw;               /* largura responsiva */
-        max-width: 50px;           /* limite máximo para não ficar grande demais */
-        aspect-ratio: 1 / 1;       /* mantém sempre a forma quadrada */
-    background-color: #1bd63a;
-    border-radius: 20%;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    font-size: 0.8rem;         /* texto proporcional */
+    font-size: 0.8rem;
+    border: 2px solid #333;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Cadeiras disponíveis */
+.cadeira.disponivel {
+    background-color: #28a745;
+    color: white;
+    border-color: #1e7e34;
+}
+
+.cadeira.disponivel:hover {
+    background-color: #34ce57;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Cadeiras ocupadas */
 .cadeira.ocupada {
-    background-color: #e08d2f; /* Cor para cadeiras ocupadas */
+    background-color: #dc3545;
+    color: white;
     cursor: not-allowed;
+    border-color: #bd2130;
 }
 
-/* Cadeiras selecionadas */
+/* Cadeiras reservadas (por outros usuários) */
+.cadeira.reservada {
+    background-color: #ffc107;
+    color: #212529;
+    cursor: not-allowed;
+    border-color: #d39e00;
+}
+
+/* Cadeiras selecionadas pelo usuário atual */
 .cadeira.selecionada {
-    background-color: #00e1ff; /* Cor para cadeiras selecionadas */
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Espaços vazios no grid */
+.espaco-vazio {
+    width: 50px;
+    height: 50px;
+}
+
+/* Legenda de cores */
+.legenda-assentos {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.legenda-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.legenda-cor {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 2px solid #333;
+}
+
+.legenda-cor.disponivel {
+    background-color: #28a745;
+    border-color: #1e7e34;
+}
+
+.legenda-cor.ocupada {
+    background-color: #dc3545;
+    border-color: #bd2130;
+}
+
+.legenda-cor.reservada {
+    background-color: #ffc107;
+    border-color: #d39e00;
+}
+
+.legenda-cor.selecionada {
+    background-color: #007bff;
+    border-color: #0056b3;
 }
 
 /* Informações de seleção */
 .info-selecao {
     position: relative;
     bottom: 10px;
-    margin-left: 100px; /* distância da sidebar (ajuste conforme a largura da sua sidebar) */
-    background-color: transparent; /* sem fundo, só texto */
-    color: #000;
+    margin-left: 100px;
+    background-color: #f8f9fa;
+    color: #495057;
     font-size: 1rem;
     font-weight: bold;
-    padding: 5px 10px;
-    pointer-events: none; /* garante que não atrapalha cliques */
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #dee2e6;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
 }
 
 /* Botão de confirmação da seleção */
 .confimar-seçao {
     background-color: rgb(255, 251, 43) !important;
     border-color: rgb(0, 0, 0) !important;
-    color: #000 !important; /* Deixa o texto mais visível com fundo amarelo */
+    color: #000 !important;
     font-weight: 600 !important;
-    margin: 0 auto !important;
+    margin: 20px auto !important;
     display: block !important;
     width: 200px !important;
+    padding: 12px !important;
+    border: 2px solid !important;
+    border-radius: 5px !important;
+    transition: all 0.3s ease !important;
 }
 
 .confimar-seçao:hover {
     background-color: rgb(255, 255, 255) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.confimar-seçao:disabled {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    color: white !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+/* Indicador de conexão */
+.status-conexao {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    z-index: 1000;
+}
+
+.status-conexao.conectado {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-conexao.desconectado {
+    background-color: #dc3545;
+    color: white;
 }
 
 /* ========================== NAVEGAÇÃO E BARRA LATERAL ====================== */
 
-/* Estilos para a barra de navegação */
-/* Estilos para a imagem dentro da barra de navegação (cabeçalho) */
 .navbar-brand img {
-    margin-right: 10px; /* Adiciona um espaço de 10 pixels à direita da imagem, separando-a do texto. */
-    margin-top: -16px; /* Ajusta a posição vertical da imagem, movendo-a 16 pixels para cima. */
-    height: 15%; /* Define a altura da imagem como 15% da altura do seu elemento pai. */
+    margin-right: 10px;
+    margin-top: -16px;
+    height: 15%;
 }
 
-/* Estilos para o texto (título) dentro da barra de navegação */
 .navbar-brand span {
-    font-family: 'Alkalami'; /* Define a fonte do texto para 'Alkalami'. */
-    font-size: 24px; /* Define o tamanho da fonte do texto para 24 pixels. */
+    font-family: 'Alkalami';
+    font-size: 24px;
 }
 
-/* Estilos para o fundo do cabeçalho */
 .container-fluid {
     z-index: 200;
-    margin-bottom: -12px; /* Define uma margem negativa inferior de 12 pixels, possivelmente para reduzir o espaço abaixo do cabeçalho. */
+    margin-bottom: -12px;
 }
 
-/* Estilos para a barra de navegação */
 .sidebar {
-        width: 90px; /* Ou a largura desejada */
-        background: linear-gradient(to bottom, rgb(255, 255, 255) 15%, rgb(255, 251, 43), rgb(255, 251, 43));
-        position: fixed; /* Fixa a barra lateral na tela */
-        top: 0; /* Alinha o topo da barra lateral ao topo da tela */
-        bottom: 0; /* Alinha a parte inferior da barra lateral à parte inferior da tela */
-        left: 0; /* Alinha a barra lateral à esquerda */
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Centraliza os botões horizontalmente */
-        justify-content: center; /* Centraliza os botões verticalmente */
-        z-index: 100; /* Defina um valor de z-index para a sidebar */
-    }
+    width: 90px;
+    background: linear-gradient(to bottom, rgb(255, 255, 255) 15%, rgb(255, 251, 43), rgb(255, 251, 43));
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
 
-/* Estilos para os botões dentro da barra de navegação */
 .sidebar button {
-    width: 40px; /* Define a largura dos botões para 40 pixels. */
-    height: 40px; /* Define a altura dos botões para 40 pixels, criando botões quadrados. */
-    background-color: yellow; /* Define a cor de fundo dos botões como amarelo. */
-    border: 1px solid; /* Define uma borda de 1 pixel sólida. */
-    border-image-slice: 1; /* Define como a imagem da borda é cortada (neste caso, toda a imagem é usada). */
-    border-radius: 50%; /* Arredonda os cantos dos botões, criando um formato circular. */
-    display: flex; /* Usa flexbox para alinhar o conteúdo interno do botão. */
-    align-items: center; /* Centraliza verticalmente o conteúdo dentro do botão. */
-    justify-content: center; /* Centraliza horizontalmente o conteúdo dentro do botão. */
-    transition: 0.3s; /* Define uma transição suave de 0.3 segundos para mudanças de estilo (como o hover). */
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); /* Adiciona uma sombra suave ao botão. */
-    margin-top: 15px; /* Adiciona uma margem superior de 15 pixels entre os botões. */
+    width: 40px;
+    height: 40px;
+    background-color: yellow;
+    border: 1px solid;
+    border-image-slice: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    margin-top: 15px;
 }
 
-/* Estilos para os botões dentro da barra de navegação quando o mouse passa por cima */
 .sidebar button:hover {
-    background-color: rgb(255, 255, 255); /* Muda a cor de fundo para branco ao passar o mouse. */
+    background-color: rgb(255, 255, 255);
 }
 
-/* Estilos específicos para o botão com ID "botaoMaior */
 #botaoMaior {
-    width: 60px; /* Define a largura do botão para 60 pixels. */
-    height: 60px; /* Define a altura do botão para 60 pixels, mantendo-o redondo. */
+    width: 60px;
+    height: 60px;
 }
 
 /* ========================== MEDIA QUERIES PARA RESPONSIVIDADE =================== */
 
-/* Ajustes para telas pequenas (max-width: 768px) */
 @media (max-width: 768px) {
-
-    /* Ajuste para a seleção de assentos */
     .info-selecao {
         margin-bottom: 50px;
+        margin-left: 10px;
+        width: calc(100% - 20px);
     }
 
-    /* Ajuste para o botão de confirmação */
     .confimar-seçao {
         position: sticky;
-        bottom: 90px; /* Fica sempre visível, acima da sidebar */
+        bottom: 90px;
         z-index: 999;
     }
 
-    /* Ajuste na tela */
     .tela {
-        margin: 0 auto; /* Centraliza horizontalmente */
+        margin: 0 auto;
+        width: calc(100% - 20px);
+        margin-left: 10px;
     }
 
-    /* Ajuste nas cadeiras (menor tamanho) */
     .cadeira {
         width: 40px;
         height: 40px;
-        background-color: #1bd63a;
-        border-radius: 20%;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: bold;
+        font-size: 0.7rem;
     }
 
-    /* Ajuste na seleção de assentos para telas menores */
     .selecao-assentos {
-        display: grid;
-        grid-template-columns: repeat(10, 50px); /* 10 cadeiras por linha */
         gap: 5px;
-        justify-content: center;
-        position: relative; /* Define a posição como relativa para que elementos internos possam ser posicionados relativamente a ele. */
-        padding-bottom: 20px; /* ou 120px se precisar de mais espaço */
+        margin-left: 10px;
+        width: calc(100% - 20px);
+        padding-bottom: 120px;
     }
 
-    /* Ajuste na barra lateral para telas menores */
+    .legenda-assentos {
+        margin-left: 10px;
+        width: calc(100% - 20px);
+        justify-content: space-around;
+    }
+
+    .legenda-item {
+        font-size: 0.8rem;
+    }
+
+    .legenda-cor {
+        width: 16px;
+        height: 16px;
+    }
+
     .sidebar {
-        position: fixed !important; /* Mantém a barra lateral fixa na tela, mesmo durante a rolagem, e força essa propriedade. */
-        top: auto !important;       /* Impede que a barra vá para o topo */
-        bottom: 0; /* Posiciona a barra lateral na parte inferior da tela. */
-        left: 0; /* Alinha a barra lateral à esquerda da tela. */
-        width: 100% !important; /* Define a largura da barra lateral para 100% da largura da tela e força essa propriedade. */
-        height: 70px !important; /* Define uma altura menor para a barra lateral em telas menores e força essa propriedade. */
-        flex-direction: row !important; /* Organiza os itens da barra lateral em uma linha horizontal e força essa propriedade. */
-        justify-content: space-around !important; /* Distribui os botões com espaço igual entre eles e nas extremidades e força essa propriedade. */
-        align-items: center !important; /* Centraliza os botões verticalmente dentro da barra lateral e força essa propriedade. */
-        padding: 10px 0 !important; /* Adiciona um pequeno preenchimento de 10 pixels na parte superior e inferior e força essa propriedade. */
+        position: fixed !important;
+        top: auto !important;
+        bottom: 0;
+        left: 0;
+        width: 100% !important;
+        height: 70px !important;
+        flex-direction: row !important;
+        justify-content: space-around !important;
+        align-items: center !important;
+        padding: 10px 0 !important;
         background: linear-gradient(to right, rgb(255, 255, 255), rgb(255, 251, 43)) !important;
-        /* Define um gradiente horizontal do branco para o amarelo como fundo e força essa propriedade. */
-        z-index: 1000; /* Garante que a barra lateral fique acima de outros elementos na página. */
+        z-index: 1000;
     }
 
-    /* Remove classes verticais como flex-column e vh-100 (se aplicadas à .sidebar) */
     .sidebar.d-flex {
-        flex-direction: row !important; /* Garante que a direção do flex seja linha e força essa propriedade. */
+        flex-direction: row !important;
     }
     
     .sidebar button {
-        margin: 0 !important; /* Remove qualquer margem dos botões na barra lateral inferior e força essa propriedade. */
+        margin: 0 !important;
     }
 
-    /* Esconde o footer em telas pequenas */
     footer {
-        display: none; /* Oculta o rodapé em telas menores ou iguais a 768 pixels. */
+        display: none;
+    }
+
+    .status-conexao {
+        top: 10px;
+        right: 10px;
+        font-size: 0.7rem;
     }
 }
 
 /* ============================== FOOTER ============================== */
 
-/* Estilo do rodapé */
 footer {
-    background: linear-gradient(to right, rgb(255, 251, 43)20%, rgb(255, 255, 255) 50%); /* Define um gradiente horizontal para o fundo, começando em amarelo e indo para branco na metade. */
-    color: black; /* Define a cor do texto como preto. */
-    padding: 10px; /* Adiciona um preenchimento de 10 pixels em todos os lados. */
-    text-align: center; /* Centraliza o texto dentro do rodapé. */
-    width: 100%; /* Ocupa toda a largura disponível. */
-    font-weight: 700; /* Define a espessura da fonte como negrito. */
+    background: linear-gradient(to right, rgb(255, 251, 43) 20%, rgb(255, 255, 255) 50%);
+    color: black;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    font-weight: 700;
+    margin-top: 40px;
 }

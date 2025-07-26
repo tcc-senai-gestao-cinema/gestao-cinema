@@ -3,12 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cine Horizonte</title>
+  <title>Cine Horizonte - Seleção de Assentos</title>
   <link href="/css/distribuicaoDoPublico.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Alkalami&display=swap" rel="stylesheet">
 </head>
 <body>
+
+  <!-- Status de Conexão -->
+  <div class="status-conexao conectado" id="status-conexao">
+    <span id="status-texto">🟢 Conectado</span>
+  </div>
 
   <!-- CABEÇALHO -->
   <nav class="navbar bg-light">
@@ -23,7 +28,7 @@
   <!-- BARRA LATERAL -->
   <div class="d-flex">
     <div class="sidebar d-flex flex-column align-items-center p-3">
-      <a href="#">  
+      <a href="/">  
         <button id="botaoMaior" type="button">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
             <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"/>
@@ -57,13 +62,51 @@
   <!-- CONTEÚDO PRINCIPAL -->
   <div class="flex-grow-1">
     <div class="container-fluid mt-1">
-      <div class="tela">Tela do cinema</div>
-      <br>
-      <div class="selecao-assentos"></div>
-      <div id="cadeira-selecionada" class="info-selecao"></div>
-      <button id="confirmar" class="btn confimar-seçao">Confirmar Seleção</button>
-      <br>
-
+      
+      <!-- Tela/Palco -->
+      <div class="tela">📺 TELA DO CINEMA 📺</div>
+      
+      <!-- Legenda de Cores -->
+      <div class="legenda-assentos">
+        <div class="legenda-item">
+          <div class="legenda-cor disponivel"></div>
+          <span>Disponível</span>
+        </div>
+        <div class="legenda-item">
+          <div class="legenda-cor selecionada"></div>
+          <span>Selecionado</span>
+        </div>
+        <div class="legenda-item">
+          <div class="legenda-cor reservada"></div>
+          <span>Reservado</span>
+        </div>
+        <div class="legenda-item">
+          <div class="legenda-cor ocupada"></div>
+          <span>Ocupado</span>
+        </div>
+      </div>
+      
+      <!-- Grid de Assentos -->
+      <div class="selecao-assentos" id="selecao-assentos">
+        <!-- Os assentos serão carregados dinamicamente via JavaScript -->
+        <div style="grid-column: 1 / -1; text-align: center; padding: 20px; color: #666;">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Carregando assentos...</span>
+          </div>
+          <p class="mt-2">Carregando assentos disponíveis...</p>
+        </div>
+      </div>
+      
+      <!-- Informações de Seleção -->
+      <div id="cadeira-selecionada" class="info-selecao">
+        Nenhum assento selecionado
+      </div>
+      
+      <!-- Botão de Confirmação -->
+      <button id="confirmar" class="btn confimar-seçao" disabled>
+        Confirmar Seleção
+      </button>
+      
       <!-- RODAPÉ -->
       <footer>
         <p>&copy; 2025 Landpage - Todos os Direitos Reservados a Vitor Oliveira Dornelas</p>
@@ -94,5 +137,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="/js/distribuicaoDoPublico/distribuicaoDoPublico.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/distribuicaoDoPublico/distribuicaoDoPublico.js"></script>
+</body>
+</html>

@@ -1,4 +1,38 @@
-// Importa o Express e o módulo 'path'
+// routes/staticRoutes.js
+// routes/indexRoute.js - Atualização para incluir rota de vagas
+const staticRoutes = require('./staticRoute');
+const filmeRoutes = require('./filmeRoute');
+const programacaoRoutes = require('./programacaoRoute');
+const vagasRoutes = require('./vagasRoute'); // Nova rota
+const loginRoutes = require('./loginRoute');
+const perfilRoutes = require('./perfilRoute');
+const cadastroRoutes = require('./cadastroRoute');
+const fidelidadeRoutes = require('./fidelidadeRoute');
+const lojinhaRoutes = require('./lojinhaRoute');
+const alteraSenhaRoute = require('./alteraSenhaRoute');
+const sessaoRoute = require('./sessaoRoute');
+
+// Exporta função que registra todas as rotas na aplicação principal
+module.exports = (app) => {
+    // Rotas de API RESTful
+    app.use('/api', filmeRoutes);
+    app.use('/api', programacaoRoutes);
+    app.use('/api/vagas', vagasRoutes); // Nova rota para vagas
+
+    // Rotas de autenticação
+    app.use('/', loginRoutes);
+    app.use('/', perfilRoutes); 
+    app.use('/', cadastroRoutes);
+    app.use('/', alteraSenhaRoute);
+    app.use('/', sessaoRoute);
+    app.use('/', staticRoutes);
+
+    // Rotas relacionadas ao sistema de fidelidade
+    app.use('/fidelidade', fidelidadeRoutes);
+
+    // Rotas da lojinha
+    app.use('/lojinha', lojinhaRoutes);
+};// Importa o Express e o módulo 'path'
 const express = require('express');
 const path = require('path');
 const { verificarLogin } = require('../middlewares/verificarLogin');
@@ -33,13 +67,13 @@ router.get('/lojinha', (req, res) => {
     res.sendFile(path.join(__dirname, '../pages/lojinha/lojinha.html'));
 });
 
-// Página da lojinha
+// Página de distribuição do público/seleção de assentos
+// Pode receber parâmetros como: /distribuicao-do-publico?programacao_id=1&local_id=1
 router.get('/distribuicao-do-publico', (req, res) => {
     res.sendFile(path.join(__dirname, '../pages/distribuicaoDoPublico/distribuicaoDoPublico.html'));
 });
 
-
-// routes/indexRoutes.js
+// Rota de logout
 router.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
