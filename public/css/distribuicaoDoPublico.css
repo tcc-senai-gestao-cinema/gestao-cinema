@@ -13,22 +13,18 @@
     justify-content: center;
     font-weight: bold;
     font-size: 1.2rem;
-    width: calc(100% - 90px);
-    margin-left: 90px;
+   
 }
 
 /* ============================ SELEÇÃO DE ASSENTOS ========================== */
 
 /* Grid para a seleção de assentos */
 .selecao-assentos {
-    display: grid;
-    gap: 10px;
-    justify-content: center;
-    margin-left: 60px;
-    width: calc(100% - 90px);
-    position: relative;
-    padding: 20px 0;
-    min-height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
 }
 
 /* Estilo para cada cadeira */
@@ -138,7 +134,6 @@
 .info-selecao {
     position: relative;
     bottom: 10px;
-    margin-left: 100px;
     background-color: #f8f9fa;
     color: #495057;
     font-size: 1rem;

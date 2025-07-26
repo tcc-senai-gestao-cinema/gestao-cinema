@@ -210,6 +210,10 @@
   color: #000 !important; /* Deixa o texto mais visível com fundo amarelo */
   width: 200px !important;
   border: 2px solid !important;
+  display: block;    /* O botão precisa ser um elemento de bloco */
+  width: 250px;      /* É necessário definir uma largura (ex: 250px ou 50%) */
+  margin-left: auto;
+  margin-right: auto;
 }
 .full-width-footer {
   width: 100vw;

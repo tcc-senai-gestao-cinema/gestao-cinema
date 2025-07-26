@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">${promocao.nome}</h5>
                             <p class="card-text flex-grow-1">${promocao.descricao}</p>
-                            <a href="/promocao/${promocao.id_promocao}" class="btn btn-primary mt-auto">Ver detalhes</a>
+                            <a href="/promocao/${promocao.id_promocao}" class="btn" id="botao">Ver detalhes</a>
                         </div>
                     </div>
                 </div>
